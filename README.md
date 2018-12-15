@@ -41,4 +41,6 @@ Short paragraph (2-3 sentences) ["elevator pitch"] describing what your project 
 - user can update profile
 - sign out from content | profile page
 
+## Clips of Code
+
 ## Wish List | Future Development
