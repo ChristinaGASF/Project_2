@@ -1,30 +1,30 @@
-# Project 2
+# Project 2 [NAME?]
 
 ## Description: 
-Short paragraph (2-3 sentences) "elevator pitch" describing what your project does
+Short paragraph (2-3 sentences) ["elevator pitch"] describing what your project does
 
 ## Link to Heroku hosted project
 
 ## Contributors:
 
-Brandon Ford [https://github.com/dogtownoak] 
-+ 
-Clarence Cheung [https://github.com/kleranscoding] 
-+ 
-Christina Hughes [https://github.com/ChristinaGASF]
+- Brandon Ford [https://github.com/dogtownoak] 
+ 
+- Clarence Cheung [https://github.com/kleranscoding] 
+ 
+- Christina Hughes [https://github.com/ChristinaGASF]
 
 
 ## Technologies:
-Python
-Django
-PostgresSQL
-YouTube API
-Watson API
+- Python
+- Django
+- PostgresSQL
+- YouTube API
+- Watson API
 
 ## Futher Exploration Goals
-Charting
-Material Design
-CSS Animations
+- Charting
+- Material Design
+- CSS Animations
 
 ## Wireframes
 
