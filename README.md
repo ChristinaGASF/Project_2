@@ -1,4 +1,5 @@
 # Project 2 [NAME?]
+tbd
 
 ## Description: 
 Short paragraph (2-3 sentences) ["elevator pitch"] describing what your project does
@@ -42,5 +43,6 @@ Short paragraph (2-3 sentences) ["elevator pitch"] describing what your project 
 - sign out from content | profile page
 
 ## Clips of Code
+
 
 ## Wish List | Future Development
