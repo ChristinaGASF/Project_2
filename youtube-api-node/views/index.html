@@ -8,12 +8,13 @@
     <link rel='stylesheet' href='styles/main.css'>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js'></script>
     <script src='https://apis.google.com/js/api.js'></script>
+    <script src='scripts/youtube_categories.js'></script>
     <script src='scripts/app.js' defer></script>
   </head>
 
   <body>
     <button id='btn_trending' type='button'>GET Trending</button>
-    <input id='input_query' type='text' placeholder='e.g. Music'>
+    <select id='select_cat'></select>
     <button id='btn_query' type='button'>Search</button>
 
     <div id='show'>
