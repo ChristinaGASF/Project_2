@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ha=ah)0!_1t5l#vwk=84u9w=feg$j6y=^yc31#_-n^u@dr%ouq'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,8 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'project_2'
-    'django_extensions'
+    'project_2_app',
 ]
 
 MIDDLEWARE = [
@@ -77,8 +76,8 @@ WSGI_APPLICATION = 'project_2.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'project_2'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'project_2',
     }
 }
 
@@ -119,4 +118,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+TEMPLATE_DIR = os.path.join(BASE_DIR,'project_2_app/templates')
+STATIC_DIR = os.path.join(BASE_DIR,'project_2_app/static')
+MEDIA_DIR = os.path.join(BASE_DIR,'project_2_app/media')
+
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [STATIC_DIR,]
+MEDIA_ROOT = MEDIA_DIR
+MEDIA_URL = '/media/'
+LOGIN_URL = '/project_2_app/user_login'
+
