@@ -1,5 +1,5 @@
 from django.contrib import admin
-from project_2_app.models import UserProfileInfo, Category, Video, Likes
+from project_2_app.models import *
 
 # Register your models here.
 admin.site.register(UserProfileInfo)
