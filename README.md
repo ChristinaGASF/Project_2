@@ -28,11 +28,11 @@ Short paragraph (2-3 sentences) ["elevator pitch"] describing what your project 
 - CSS Animations
 
 ## Wireframes
-<img src=>
-<img src=>
-<img src=>
-<img src=>
-<img src=>
+<img src=https://github.com/ChristinaGASF/project_2/blob/master/wireframes/signin_page.png>
+<img src=https://github.com/ChristinaGASF/project_2/blob/master/wireframes/about_page.png>
+<img src=https://github.com/ChristinaGASF/project_2/blob/master/wireframes/content_page.png>
+<img src=https://github.com/ChristinaGASF/project_2/blob/master/wireframes/profile_page.png>
+<img src=https://github.com/ChristinaGASF/project_2/blob/master/wireframes/analysis_page.png>
 
 ## User Stories
 - sign in or sign up to access content
