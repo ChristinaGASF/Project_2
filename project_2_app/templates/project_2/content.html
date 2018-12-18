@@ -1,5 +1,30 @@
-{% extends 'project_2/base.html' %}
+<!-- {% extends 'project_2/base.html' %} -->
 
-{% block content %}
-<h2>YOUTUBE CONTENT</h2>
-{% endblock %}
+<!-- {% block content %} -->
+<h2>YouTube Content</h2>
+<body>
+        <button id='btn_trending' type='button'>Get Trending</button>
+        <select id='select_cat'>{{ video.category }}</select>
+        <button id='btn_query' type='button'>Search</button>
+    
+        <div id='show'>
+            <ul>
+                <l1></l1>
+                {% for video in videos %}
+                    
+                    url = '/json'
+
+                        params = dict(
+                            title =
+                            thumbnail_url =
+                            
+                            
+                            resp = requests.get(url=url, params=params)
+                            data = resp.json()
+               
+                {% endfor %}
+            </l1>
+            </ul>
+        </div>
+</body>
+<!-- {% endblock %} -->
