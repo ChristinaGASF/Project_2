@@ -1,5 +1,13 @@
 {% extends 'project_2/base.html' %}
 
 {% block content %}
+
+{% if user.is_authenticated %}
 <h2>YOUTUBE CONTENT</h2>
+
+{% else %}
+  <h1> 403 Forbidden </h1>
+  <h2> You need to Sign In </h2>
+{% endif %}
+
 {% endblock %}
