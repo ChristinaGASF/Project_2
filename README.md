@@ -18,7 +18,8 @@ Short paragraph (2-3 sentences) ["elevator pitch"] describing what your project 
 - Python
 - Django
 - PostgresSQL
-- YouTube API
+### YouTube API demo (using Express, Ajax)
+[Link](https://github.com/ChristinaGASF/project_2/tree/youtube_api_demo/youtube-api-node)
 - Watson API
 
 ## Futher Exploration Goals
@@ -27,6 +28,11 @@ Short paragraph (2-3 sentences) ["elevator pitch"] describing what your project 
 - CSS Animations
 
 ## Wireframes
+<img src=>
+<img src=>
+<img src=>
+<img src=>
+<img src=>
 
 ## User Stories
 - sign in or sign up to access content
@@ -41,9 +47,9 @@ Short paragraph (2-3 sentences) ["elevator pitch"] describing what your project 
 - user can update profile
 - sign out from content | profile page
 
+## Color Scheme
+<img src=>
+
 ## Clips of Code
 
 ## Wish List | Future Development
-
-### YouTube API demo (using Express, Ajax)
-[Link](https://github.com/ChristinaGASF/project_2/tree/youtube_api_demo/youtube-api-node)
