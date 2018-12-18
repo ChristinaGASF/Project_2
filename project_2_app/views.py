@@ -49,6 +49,9 @@ def user_login(request):
         return render(request, 'project_2/login.html', {})
 
 
+def about(request): return render(request, 'project_2/about.html')
+
+
 @login_required
 def user_logout(request):
     logout(request)
