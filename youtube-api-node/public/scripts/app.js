@@ -19,7 +19,7 @@ function populatePage(json) {
         if (trendings.length>maxShowResults) return;
         trendings.push(item);
         i++;
-        var vid= item.id.videoId;
+        var vid= item.id;
         var snippet= item.snippet;
         var thumbnails= snippet.thumbnails.medium;
         var tags= snippet.tags!==undefined? snippet.tags.join(', ') : 'no tags';
