@@ -44,3 +44,6 @@ Short paragraph (2-3 sentences) ["elevator pitch"] describing what your project 
 ## Clips of Code
 
 ## Wish List | Future Development
+
+### YouTube API demo (using Express, Ajax)
+[Link](https://github.com/ChristinaGASF/project_2/tree/youtube_api_demo/youtube-api-node)
