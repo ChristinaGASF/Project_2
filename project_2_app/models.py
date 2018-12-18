@@ -5,11 +5,10 @@ import datetime
 # Create your models here.
 
 class UserProfileInfo(models.Model):
-    name = models.OneToOneField(User,on_delete=models.CASCADE)
-    email = models.CharField(max_length=50)
+    name = models.OneToOneField(User,on_delete=models.CASCADE,related_name="user_name")
     profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
 
-    def __str__(self): return self.user.name
+    def __str__(self): return self.name.username
 
 
 class Category(models.Model):
