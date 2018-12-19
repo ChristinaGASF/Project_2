@@ -5,6 +5,17 @@
 {% if user.is_authenticated %}
 <h2>YOUTUBE CONTENT</h2>
 
+  {% for video in video_results %}
+    <article>
+      <h3>{{ video.youtube_id }}</h3>
+      <h2>{{ video.title }}</h2>
+      <p>{{ video.description }}</p>
+      <p>{{ video.thumbnail }}</p>
+      <h3>{{ video.channel_title }}</h3>
+      <h3>{{ video.category_id }}</h3>
+    </article>
+  {% endfor %}
+
 {% else %}
   <h1> 403 Forbidden </h1>
   <h2> You need to Sign In </h2>
