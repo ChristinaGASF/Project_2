@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 import requests, json, os
 
 
@@ -39,8 +40,7 @@ def get_youtube_video_helper(video_list,next_page_token,max_limit):
 # get video list 
 def get_video_list(max_limit):
     video_list= []
-    get_youtube_video_helper(video_list,'',max_limit)
-    
+    get_youtube_video_helper(video_list,'',max_limit)    
     print(len(video_list))
 
     video_results= []
@@ -54,14 +54,37 @@ def get_video_list(max_limit):
         tags= ', '.join(snippet.get('tags')) if snippet.get('tags') else ''
         cat_id= snippet.get('categoryId')
         #print(yid,'\n',title,'\n',descrp,'\n',thumbnail,'\n',channel_title,'\n',tags,'\n',cat_id)
-        video_results.append({'youtube_id': yid, 'title': title,'description': descrp,'thumbnail': thumbnail,'channel_title': channel_title,'tags': tags,'category_id': cat_id})
-    
+        video_results.append({'youtube_id': yid, 'title': title,'description': descrp,'thumbnail': thumbnail,'channel_title': channel_title,'tags': tags,'category_id': cat_id})    
     return video_results
+
+
+# save likes/dislikes to lists
+def append_likes_dislikes_videos_list(likes_dislikes_list,result_list):
+    for like in likes_dislikes_list:
+        video= Video.objects.get(title=like.video_id)
+        result_list.append({
+            'youtube_id': video.youtube_id,
+            'title': video.title,
+            'channel_title': video.channel_title,
+            'description': video.description,
+            'tags': video.tags,
+            'thumbnail_url': video.thumbnail_url,
+            'category': video.category
+        })
+
 
 
 # Create your views here.
 
+## index
 def index(request): return render(request,'project_2/landing.html')
+
+## about
+def about(request): return render(request, 'project_2/about.html')
+
+## get youtube videos
+def get_youtube(request): return render(request, 'project_2/youtube.html',{'video_results':get_video_list(20)})
+    
 
 
 def register(request):
@@ -108,8 +131,8 @@ def user_login(request):
         return render(request, 'project_2/login.html', {})
 
 
-def about(request): return render(request, 'project_2/about.html')
 
+### LOGIN_REQUIRED VIEWS ###
 
 @login_required
 def user_logout(request):
@@ -118,14 +141,23 @@ def user_logout(request):
 
 
 @login_required
-def content(request): return render(request, 'project_2/content.html',{'video_results':get_video_list(20)})
+def content_page(request): return render(request, 'project_2/content.html',{'video_results':get_video_list(20)})
 
 
-def get_youtube(request): 
-    max_limit= 20
-    video_results= get_video_list(max_limit)
-    return render(request, 'project_2/youtube.html',{'video_results':video_results})
+@login_required
+def profile_page(request):
+    user_likes_videos, user_dislikes_videos= [], []
+    user_id = request.user.userprofileinfo.id
+    likes_list= Likes.objects.filter(user_id=user_id,like=True)
+    dislikes_list= Likes.objects.filter(user_id=user_id,like=False)
+    append_likes_dislikes_videos_list(likes_list,user_likes_videos)
+    append_likes_dislikes_videos_list(dislikes_list,user_dislikes_videos)
     
+    return render(request, 'project_2/profile.html',{
+        'user_likes_videos':user_likes_videos,
+        'user_dislikes_videos':user_dislikes_videos
+    })
+
 
 @login_required
 def add_like_dislike(request):
@@ -144,8 +176,6 @@ def add_like_dislike(request):
                 description=data.get("description"),
                 tags=data.get("tags"),
                 thumbnail_url=data.get("thumbnail_url"),
-                thumbnail_width=data.get("thumbnail_width"),
-                thumbnail_height=data.get("thumbnail_height"),
                 category=Category.objects.get(category_id=data.get("category_id"))
             )
             v.save()

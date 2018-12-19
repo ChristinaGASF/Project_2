@@ -1,5 +1,47 @@
 {% extends 'project_2/base.html' %}
 
-{% block content %}
-<h2>PROFILE</h2>
+{% block profile %}
+
+{% if user.is_authenticated %}
+
+  <h1>Hi, {{ user.userprofileinfo }}</h1>
+  <h2>PROFILE</h2>
+
+  <h3>Likes</h3>
+  {% for video in user_likes_videos %}
+    <article data-id="{{video.youtube_id}}">
+      <h3>{{ video.title }}</h3>
+      <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'>
+        <img src='{{ video.thumbnail_url }}' alt=''>
+      </a>
+      <p class='p-description'>{{ video.description }}</p>
+      <p class='p-tags'>{{ video.tags }}</p>
+      <p class='p-channel-title'>{{ video.channel_title }}</p>
+      <p class='p-cat-id' style='display:none;'>{{ video.category_id }}</p>
+    </article>
+
+  {% endfor %}
+
+  <h3>DisLikes</h3>
+  {% for video in user_dislikes_videos %}
+    <article data-id="{{video.youtube_id}}">
+      <h3>{{ video.title }}</h3>
+      <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'>
+        <img src='{{ video.thumbnail_url }}' alt=''>
+      </a>
+      <p class='p-description'>{{ video.description }}</p>
+      <p class='p-tags'>{{ video.tags }}</p>
+      <p class='p-channel-title'>{{ video.channel_title }}</p>
+      <p class='p-cat-id' style='display:none;'>{{ video.category_id }}</p>
+    </article>
+
+  {% endfor %}
+
+{% else %}
+  
+  <h1> 403 Forbidden </h1>
+  <h2> You need to Sign In </h2>
+
+{% endif %}
+
 {% endblock %}

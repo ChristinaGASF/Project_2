@@ -8,8 +8,8 @@ urlpatterns= [
     path('login/',views.user_login,name='user_login'),
     path('logout/',views.user_logout,name='logout'),
     #path('',views.analysis,name='analysis'),
-    #path('',views.profile,name='profile'),
-    path('content/',views.content,name='content'),
+    path('profile/',views.profile_page,name='profile'),
+    path('content/',views.content_page,name='content'),
     path('youtube/',views.get_youtube,name='get_youtube'),
 
     path('add_like_dislike/',views.add_like_dislike,name='add_like_dislike'),
