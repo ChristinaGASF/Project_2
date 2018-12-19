@@ -96,7 +96,7 @@ def content(request):
 def get_youtube_video_helper(video_list,next_page_token,max_limit):
     if len(video_list)>=max_limit: return
     
-    key= 'AIzaSyD8O5vCtNWjhEaVSe9jbID-Ne8LtNIsdTo'
+    key= ''
     max_results= 10
     part= 'snippet,contentDetails,statistics'
     orderby= 'viewCount'
