@@ -59,4 +59,92 @@ def user_logout(request):
 
 
 @login_required
-def content(request): return render(request, 'project_2/content.html')
+def content(request): 
+    video_list= []
+    max_limit= 20
+    get_youtube_video_helper(video_list,'',max_limit)
+    
+    print(len(video_list))
+    
+    #print(video_list)
+    video_results= []
+    for video in video_list:
+        yid= video.get('id')
+        snippet= video.get('snippet')
+        title= snippet.get('title')
+        descrp= snippet.get('description')
+        thumbnail= snippet.get('thumbnails').get('default')
+        channel_title= snippet.get('channelTitle')
+        cat_id= snippet.get('categoryId')
+        print(yid)
+        print(title)
+        print(descrp)
+        print(thumbnail)
+        print(channel_title)
+        print(cat_id)
+        video_results.append({'youtube_id': yid, 
+                              'title': title, 
+                              'description': descrp,
+                              'thumbnail': thumbnail,
+                              'channel_title': channel_title,
+                              'category_id': cat_id})
+
+    return render(request, 'project_2/content.html',{'video_results':video_results})
+
+## recursive function pagination
+def get_youtube_video_helper(video_list,next_page_token,max_limit):
+    if len(video_list)>=max_limit: return
+    
+    key= ''
+    max_results= 10
+    part= 'snippet,contentDetails,statistics'
+    orderby= 'viewCount'
+
+    base_url= 'https://www.googleapis.com/youtube/v3/videos?part='+part+'&regionCode=US&maxResults='+str(max_results)+'&chart=mostPopular&order='+orderby+'&key='+key
+
+    if next_page_token != '':
+        base_url+= '&pageToken='+next_page_token
+    elif next_page_token=='' and len(video_list)>0: 
+        return
+
+    res = requests.get(base_url)
+    json_res= res.json()
+    next_page_token= json_res.get('nextPageToken') if json_res.get('nextPageToken') else ''
+    videos= json_res.get('items')
+    video_list.extend(videos)
+
+    get_youtube_video_helper(video_list,next_page_token,max_limit)
+
+
+def get_youtube(request): 
+    
+    video_list= []
+    max_limit= 20
+    get_youtube_video_helper(video_list,'',max_limit)
+    
+    print(len(video_list))
+    
+    #print(video_list)
+    video_results= []
+    for video in video_list:
+        yid= video.get('id')
+        snippet= video.get('snippet')
+        title= snippet.get('title')
+        descrp= snippet.get('description')
+        thumbnail= snippet.get('thumbnails').get('default')
+        channel_title= snippet.get('channelTitle')
+        cat_id= snippet.get('categoryId')
+        print(yid)
+        print(title)
+        print(descrp)
+        print(thumbnail)
+        print(channel_title)
+        print(cat_id)
+        video_results.append({'youtube_id': yid, 
+                              'title': title, 
+                              'description': descrp,
+                              'thumbnail': thumbnail,
+                              'channel_title': channel_title,
+                              'category_id': cat_id})
+
+    return render(request, 'project_2/youtube.html',{'video_results':video_results})
