@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from project_2_app.forms import UserForm, UserProfileInfoForm
+from project_2_app.models import UserProfileInfo, Video, Category, Likes
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import ObjectDoesNotExist
 import requests, json, os
 
 
@@ -10,7 +12,7 @@ key= os.environ['GOOGLAPI']
 
 ## helper functions
 
-## recursive function pagination
+# recursive function pagination
 def get_youtube_video_helper(video_list,next_page_token,max_limit):
     if len(video_list)>=max_limit: return
     
@@ -35,9 +37,8 @@ def get_youtube_video_helper(video_list,next_page_token,max_limit):
 
 
 # get video list 
-def get_video_list():
+def get_video_list(max_limit):
     video_list= []
-    max_limit= 20
     get_youtube_video_helper(video_list,'',max_limit)
     
     print(len(video_list))
@@ -52,7 +53,7 @@ def get_video_list():
         channel_title= snippet.get('channelTitle')
         tags= ', '.join(snippet.get('tags')) if snippet.get('tags') else ''
         cat_id= snippet.get('categoryId')
-        print(yid,'\n',title,'\n',descrp,'\n',thumbnail,'\n',channel_title,'\n',tags,'\n',cat_id)
+        #print(yid,'\n',title,'\n',descrp,'\n',thumbnail,'\n',channel_title,'\n',tags,'\n',cat_id)
         video_results.append({'youtube_id': yid, 'title': title,'description': descrp,'thumbnail': thumbnail,'channel_title': channel_title,'tags': tags,'category_id': cat_id})
     
     return video_results
@@ -77,9 +78,9 @@ def register(request):
             if 'profile_pic' in request.FILES:
                 profile.profile_pic = request.FILES['profile_pic']
             profile.save()
-            print('profile: ',profile)
+            #print('profile: ',profile)
             registered = True
-            print('NEWUSER: ',new_user)
+            #print('NEWUSER: ',new_user)
             login(request,new_user)
             return redirect('content')
         else:
@@ -117,12 +118,55 @@ def user_logout(request):
 
 
 @login_required
-def content(request): return render(request, 'project_2/content.html',{'video_results':get_video_list()})
+def content(request): return render(request, 'project_2/content.html',{'video_results':get_video_list(20)})
 
 
 def get_youtube(request): 
-    video_results= get_video_list()
+    max_limit= 20
+    video_results= get_video_list(max_limit)
     return render(request, 'project_2/youtube.html',{'video_results':video_results})
     
 
+@login_required
+def add_like_dislike(request):
+    if request.method == 'POST':
+        user_profile = request.user.userprofileinfo
+        data = request.POST
+        yid = data.get("youtube_id")
+        try:
+            has_video = Video.objects.get(youtube_id=yid)
+            this_video = has_video
+        except ObjectDoesNotExist:
+            v = Video(
+                youtube_id=yid,
+                title=data.get("title"),
+                channel_title=data.get("channel_title"),
+                description=data.get("description"),
+                tags=data.get("tags"),
+                thumbnail_url=data.get("thumbnail_url"),
+                thumbnail_width=data.get("thumbnail_width"),
+                thumbnail_height=data.get("thumbnail_height"),
+                category=Category.objects.get(category_id=data.get("category_id"))
+            )
+            v.save()
+            this_video = v
+
+        try:
+            has_likes= Likes.objects.get(user_id=user_profile.id,video_id=this_video.id)
+            #lid= has_likes.id
+            message= "duplicated action"
+        except ObjectDoesNotExist:
+
+            l= Likes(
+                user_id=user_profile,
+                video_id=this_video,
+                like=data.get("like")
+            )
+            l.save()
+            message= "saved action"
+            #lid=l.id
+        
+        return HttpResponse(json.dumps({"message": message}),content_type="application/json")
+    else:
+        return HttpResponse(json.dumps({"message": "bad request method"}),content_type="application/json")
     

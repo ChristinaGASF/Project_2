@@ -11,6 +11,7 @@ class UserProfileInfo(models.Model):
     def __str__(self): return self.name.username
 
 
+
 class Category(models.Model):
     category_id = models.CharField(max_length=4)
     title = models.CharField(max_length=50)
@@ -34,9 +35,8 @@ class Video(models.Model):
 
 
 
-
 class Likes(models.Model):
-    user_id = models.ForeignKey(User,on_delete=models.CASCADE,related_name='users')
+    user_id = models.ForeignKey(UserProfileInfo,on_delete=models.CASCADE,related_name='users')
     video_id = models.ForeignKey(Video,on_delete=models.CASCADE,related_name='videos')
     date = models.DateField(default=datetime.date.today)
     like = models.BooleanField(default=False)
