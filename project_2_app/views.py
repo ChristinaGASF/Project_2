@@ -3,7 +3,7 @@ from project_2_app.forms import UserForm, UserProfileInfoForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-import requests, json
+#import requests, json
 
 # Create your views here.
 

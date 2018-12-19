@@ -11,8 +11,8 @@
 
       {% else %}
 
-      <h1>Register Here</h1>
-        <h3>Just fill out the form.</h3>
+      <h4>Sign Up Here</h4>
+        <h5>Fill out the form below:</h5>
         <form enctype="multipart/form-data" method="POST">
           {% csrf_token %}
           {{ user_form.as_p }}

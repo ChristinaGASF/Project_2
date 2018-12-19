@@ -5,26 +5,43 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>Project 2</title>
+        <script src="https://code.jquery.com/jquery-3.3.1.js"integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="crossorigin="anonymous"></script>
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
-        <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.3.1.js"
-        integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-        crossorigin="anonymous"></script>
-    </head>
-    
-    <body>
-        <h1>Working Title Base HTML</h1>
+     </head>
+     <body>
+    <nav class= "blue darken-4">
+      <div class="nav-wrapper blue darken-4">
+        <a href="#!" class="brand-logo grey-text text-lighten-4">YouTube Analysis</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        
         {% if user.is_authenticated %}
-          <a href="{% url 'about' %}">About</a> | 
-          <a href="{% url 'content' %}">Content</a> | 
-          <a href="{% url 'logout' %}">Logout</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'content' %}">Content</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+          </ul>
+        <ul class="side-nav" id="mobile-demo">
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'content' %}">Content</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
         {% else %}
-          <a href="{% url 'about' %}">About</a> | 
-          <a href="{% url 'user_login' %}">Sign In</a> | 
-          <a href="{% url 'register' %}">Sign Up</a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'user_login' %}">Sign In</a> </li>
+          <li><a href="{% url 'register' %}">Sign Up</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'user_login' %}">Sign In</a> </li> 
+          <li><a href="{% url 'register' %}">Sign Up</a></li>
+        </ul>
         {% endif %}
-
+      </div>
+    </nav>
         {% block landing %}
         {% endblock %}
 
@@ -36,7 +53,28 @@
 
         {% block content %}
         {% endblock %}
+
+        <footer class="page-footer blue darken-3">
+          <div class="container">
+            <div class="row">
+                <div class="col l4 offset-l2 s12">
+                <p class="grey-text text-lighten-3">Web application made in conjunction with
+                    <a class="grey-text text-lighten-3" href="https://developers.google.com/youtube/">YouTube Api</a>,
+                    <a class="grey-text text-lighten-3" href="https://www.ibm.com/watson/developer/">IBM Watson Api</a>,
+                    <a class="grey-text text-lighten-3" href="#!">Charting Api</a>.
+                </p>
+                
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright blue darken-4">
+            <div class="container">
+            © 2018 Brandon Ford, Kai Wing Clarence Cheung, and Christina Hughes
+            <a class="grey-text text-lighten-4 right" href="https://generalassemb.ly/">General Assembly</a>
+            </div>
+          </div>
+        </footer>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
     </body>
-<footer>
-</footer>
 </html>
