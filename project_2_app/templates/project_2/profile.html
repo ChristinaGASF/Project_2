@@ -9,6 +9,10 @@
   <h1>Hi, {{ user.userprofileinfo }}</h1>
   <h2>PROFILE</h2>
 
+  <p>username <span>{{ user.userprofileinfo }}</span></p>
+  <p>email address <span id='email'>{{ user.email }}</span></p>
+
+
   <h3>Likes</h3>
   {% for video in user_likes_videos %}
     <article data-id="{{video.youtube_id}}">

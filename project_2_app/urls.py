@@ -12,6 +12,7 @@ urlpatterns= [
     path('content/',views.content_page,name='content'),
     path('youtube/',views.get_youtube,name='get_youtube'),
 
+    path('user/profile_edit/',views.profile_edit,name='profile_edit'),
     path('user/add_like_dislike/',views.add_like_dislike,name='add_like_dislike'),
     path('user/remove_like_dislike/',views.remove_like_dislike,name='remove_like_dislike'),
 ]

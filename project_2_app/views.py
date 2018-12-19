@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from project_2_app.forms import UserForm, UserProfileInfoForm
 from project_2_app.models import UserProfileInfo, Video, Category, Likes
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, QueryDict
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, QueryDict
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import connection
@@ -161,6 +161,24 @@ def profile_page(request):
 
 
 @login_required
+def profile_edit(request):
+    if request.method == 'PATCH':
+
+        email = json.loads(request.body).get('email')
+        with connection.cursor() as cursor:
+            cursor.execute("UPDATE AUTH_USER SET email=%s WHERE id=%s;",[email,str(request.user.id)])
+            row = cursor.rowcount
+            if row>0: 
+                return HttpResponse(json.dumps({"message":"edited"}),content_type="application/json")
+            else:
+                return HttpResponseNotFound(json.dumps({"message": "record not found"}),content_type="application/json")
+    else:
+
+        return HttpResponseBadRequest(json.dumps({"message": "bad request method"}),content_type="application/json")
+
+
+
+@login_required
 def remove_like_dislike(request):
     if request.method == 'DELETE':
         user_profile_id = request.user.userprofileinfo.id
@@ -182,10 +200,10 @@ def remove_like_dislike(request):
             if row>0: 
                 return HttpResponse(json.dumps({"message": "successfully deleted"}),content_type="application/json")
             else: 
-                return HttpResponse(json.dumps({"message": "record not found"}),content_type="application/json")
+                return HttpResponseNotFound(json.dumps({"message": "record not found"}),content_type="application/json")
         
     else:
-        return HttpResponse(json.dumps({"message": "bad request method"}),content_type="application/json")
+        return HttpResponseBadRequest(json.dumps({"message": "bad request method"}),content_type="application/json")
 
 @login_required
 def add_like_dislike(request):
@@ -226,5 +244,5 @@ def add_like_dislike(request):
         
         return HttpResponse(json.dumps({"message": message}),content_type="application/json")
     else:
-        return HttpResponse(json.dumps({"message": "bad request method"}),content_type="application/json")
+        return HttpResponseBadRequest(json.dumps({"message": "bad request method"}),content_type="application/json")
     
