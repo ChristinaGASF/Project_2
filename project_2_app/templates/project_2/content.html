@@ -3,7 +3,20 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-<h2>YOUTUBE CONTENT</h2>
+
+  <h1>Hi, {{ user.userprofileinfo }}</h1>
+  <h2>YOUTUBE CONTENT</h2>
+  
+  {% for video in video_results %}
+    <article>
+      <h3>{{ video.title }}</h3>
+      <a href='https://www.youtube.com/watch?v={{video.youtube_id}'>
+        <img src='{{ video.thumbnail.url }}'>
+      </a>
+      <p>{{ video.description }}</p>
+      <p>{{ video.tags }}</p>
+    </article>
+  {% endfor %}
 
 {% else %}
   <h1> 403 Forbidden </h1>
