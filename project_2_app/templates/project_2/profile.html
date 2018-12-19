@@ -4,6 +4,8 @@
 
 {% if user.is_authenticated %}
 
+  {% load staticfiles %}
+
   <h1>Hi, {{ user.userprofileinfo }}</h1>
   <h2>PROFILE</h2>
 
@@ -18,6 +20,7 @@
       <p class='p-tags'>{{ video.tags }}</p>
       <p class='p-channel-title'>{{ video.channel_title }}</p>
       <p class='p-cat-id' style='display:none;'>{{ video.category_id }}</p>
+      <button class="btn-remove">remove</button>
     </article>
 
   {% endfor %}
@@ -33,9 +36,13 @@
       <p class='p-tags'>{{ video.tags }}</p>
       <p class='p-channel-title'>{{ video.channel_title }}</p>
       <p class='p-cat-id' style='display:none;'>{{ video.category_id }}</p>
+      <button class="btn-remove">remove</button>
     </article>
 
   {% endfor %}
+
+  <script src="{% static 'scripts/csrf_helper.js' %}"></script>
+  <script src="{% static 'scripts/profile.js' %}" defer></script>
 
 {% else %}
   

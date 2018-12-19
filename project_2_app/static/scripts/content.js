@@ -1,20 +1,5 @@
 console.log('in-sanity check');
 
-function getCookie(name) {
-    if (!document.cookie) {
-      return null;
-    }
-  
-    const xsrfCookies = document.cookie.split(';')
-      .map(c => c.trim())
-      .filter(c => c.startsWith(name + '='));
-  
-    if (xsrfCookies.length === 0) {
-      return null;
-    }
-  
-    return decodeURIComponent(xsrfCookies[0].split('=')[1]);
-}
 
 function likes_dislike_post_ajax(parent,article_data_id,likes,csrfToken) {
     
@@ -34,7 +19,7 @@ function likes_dislike_post_ajax(parent,article_data_id,likes,csrfToken) {
 
     $.ajax({
         "method": "POST",
-        "url": "/add_like_dislike/",
+        "url": "/user/add_like_dislike/",
         "data": dataToSend,
         "beforeSend": function(xhr) {
             xhr.setRequestHeader('X-CSRFToken', csrfToken);
