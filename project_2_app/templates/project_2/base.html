@@ -10,6 +10,17 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
         <script src="{% static 'scripts/app.js' %}" defer></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+        {% block headSentimentEmotion %}
+        {% endblock headSentimentEmotion%}
+        {% block headKeywords %}
+        {% endblock headKeywords%}
+        {% block headEntities %}
+        {% endblock headEntities %}
+        {% block headEntitiesBar %}
+        {% endblock headEntitiesBar %}
+
     </head>
     
     <body>
