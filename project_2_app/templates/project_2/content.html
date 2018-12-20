@@ -1,137 +1,95 @@
 {% extends 'project_2/base.html' %}
 
-
-
 {% block content %}
 
 {% if user.is_authenticated %}
 
-  {% load staticfiles %}
+{% load staticfiles %}
+
 <script>$( document ).ready(function(){$(".button-collapse").sideNav();});</script>
 
-  <h4>Hello {{ user.userprofileinfo }},</h4>
-  <h5>Trending on YouTube today...</h5>
+<h4>Hello {{ user.userprofileinfo }},</h4>
   
-  <button class="show-search amber accent-3">Search Option</button>
 
-  <div class="search_videos">
-    <button type="button amber accent-3" class="btn-get-all">
-      Get Trending Videos from All Categories
-    </button>
 
-    Or
+<div class="row">
 
-    <select class="category">
+<div class="col s4">
+<button class="btn-get-all" class="btn waves-effect waves-light light-blue darken-1 grey-text text-lighten-4" type="submit" name="action">Top Trending on YouTube today from All Categories
+</button>
+</div>
+
+<div class="col s4">OR</div>
+
+<div class="col s4 hoverable light-blue darken-1">
+    <select class= "category">
       {% for cat in categories %}
         <option value='{{ cat.category_id }}'>{{ cat.title }}</option>
       {% endfor %}
     </select>
+</div>
 
-    <button type="button  amber accent-3" class="btn-get-selected">
-      Get from this Category
-    </button>
-  </div>
-  
-  
-  <div id="video_list">
-  {% for video in video_results %}
-    <article data-id="{{video.youtube_id}}">
+<div class="col s4">
+  <button type="button" class="btn-get-selected" class="amber accent-3">Get from this Category</button>
+</div>
+
+</div>
+
+
+
+
+<div id="video_list">
+{% for video in video_results %}
+
+<article data-id="{{video.youtube_id}}">
 
     
   <div class="row">
     <div class="col s12">
       <div class="card">
-                <div class="card-content">
-        <div class="card-title">{{ video.title }}</div>
-        </div>
-        <div class="card-image">
-            <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'>
-            <img src='{{ video.thumbnail.url }}' alt=''></a>
-          </div>
+
         <div class="card-content">
+          <div class="card-title">{{ video.title }}</div>
+        </div>
+
+        <div class="card-image">
+          <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'>
+            <img src='{{ video.thumbnail.url }}' alt=''></a>
+        </div>
         
+        <div class="card-content">
           <p class='p-description truncate'>{{ video.description }}</p>
         </div>
-        <div class="card-action">
-
-    
-    <div class="row">
-
-      <div class="col s6">
-      <button class="btn-dislike waves-effect waves-light  red accent-4 btn"><i class="material-icons left">thumb_down</i>DisLike</button>
-      </div>
-
-      <div class="col s6">
-      <button class="btn-like waves-effect waves-light light-blue darken-1 btn"><i class="material-icons right">thumb_up</i>Like</button>
-      </div>
-    
-    </div>
-
-
-
-
-      
-
-        </div>
-      </div>
-    </div>
-  </div>
-    
-    
-    
-    </article>
-
-  {% endfor %}
-
-  </div>
-
-  <script src="{% static 'scripts/csrf_helper.js' %}"></script>
-  <script src="{% static 'scripts/content.js' %}" defer></script>
-
-  {% for video in video_results %}
-
-    <article>
-
-
-  <div class="row">
-    <div class="col s12">
-      <div class="card">
-                <div class="card-content">
-        <div class="card-title">{{ video.title }}</div>
-        </div>
-        <div class="card-image">
-            <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'>
-            <img src='{{ video.thumbnail.url }}' alt=''></a>
-          </div>
-        <div class="card-content">
         
-          <p class='p-description truncate'>{{ video.description }}</p>
-        </div>
         <div class="card-action">
-      
-    <div class="row">
-
-      <div class="col s6">
-      <button class="btn-dislike waves-effect waves-light  red accent-4 btn"><i class="material-icons left">thumb_down</i>DisLike</button>
-      </div>
-
-      <div class="col s6">
-      <button class="btn-like waves-effect waves-light light-blue darken-1 btn"><i class="material-icons right">thumb_up</i>Like</button>
-      </div>
-    
-    </div>
+          <div class="row">
+            <div class="col s6">
+              <button class="btn-dislike" class="waves-effect waves-light red accent-4 btn"><i class="material-icons left">thumb_down</i> DISLIKE</button>
+            </div>
+            <div class="col s6">
+              <button class="btn-like" class="waves-effect waves-light light-blue darken-1 btn"><i class="material-icons right">thumb_up</i> LIKE</button>
+            </div>
+        </div>
 
         </div>
       </div>
     </div>
   </div>
+    
+</article>
 
-    </article>
-  {% endfor %}
+{% endfor %}
+
+  </div>
+
+
+<script src="{% static 'scripts/csrf_helper.js' %}"></script>
+<script src="{% static 'scripts/content.js' %}" defer></script>
+
 
 {% else %}
-  <h1> 403 Forbidden </h1>
-  <h2> You need to Sign In </h2>
+<h1>403 Forbidden</h1>
+<h2>You need to Sign In</h2>
 {% endif %}
 
 {% endblock %}
