@@ -1,0 +1,226 @@
+[
+  {
+   "model": "project_2_app.category",
+   "fields": {
+     "category_id": "1",
+     "title": "Film & Animation"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "2",
+    "title": "Autos & Vehicles"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "10",
+    "title": "Music"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+   "category_id": "15",
+    "title": "Pets & Animals"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "17",
+    "title": "Sports"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "18",
+    "title": "Short Movies"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "19",
+    "title": "Travel & Events"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "20",
+    "title": "Gaming"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "21",
+    "title": "Videoblogging"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "22",
+    "title": "People & Blogs"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "23",
+    "title": "Comedy"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "24",
+    "title": "Entertainment"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "25",
+    "title": "News & Politics"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "26",
+    "title": "Howto & Style"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "27",
+    "title": "Education"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "28",
+    "title": "Science & Technology"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "29",
+    "title": "Nonprofits & Activism"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "30",
+    "title": "Movies"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "31",
+    "title": "Anime/Animation"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "32",
+    "title": "Action/Adventure"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "33",
+    "title": "Classics"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "34",
+    "title": "Comedy"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "35",
+    "title": "Documentary"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "36",
+    "title": "Drama"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "37",
+    "title": "Family"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "38",
+    "title": "Foreign"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "39",
+    "title": "Horror"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "40",
+    "title": "Sci-Fi/Fantasy"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "41",
+    "title": "Thriller"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "42",
+    "title": "Shorts"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "43",
+    "title": "Shows"
+   }
+  },
+  {
+   "model": "project_2_app.category",
+   "fields": {
+    "category_id": "44",
+    "title": "Trailers"
+   }
+  }
+]
