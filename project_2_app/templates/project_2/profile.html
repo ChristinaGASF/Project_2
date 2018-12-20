@@ -1,5 +1,60 @@
 {% extends 'project_2/base.html' %}
 
-{% block content %}
-<h2>PROFILE</h2>
+{% block profile %}
+
+{% if user.is_authenticated %}
+
+  {% load staticfiles %}
+
+  <h1>Hi, {{ user.userprofileinfo }}</h1>
+  <h2>PROFILE</h2>
+
+  <img src='{{ user.userprofileinfo.profile_pic.url }}' style='width:120;height:120;'>
+  
+  <p>username <span>{{ user.userprofileinfo }}</span></p>
+  <p>email address <span id='email'>{{ user.email }}</span></p>
+
+
+  <h3>Likes</h3>
+  {% for video in user_likes_videos %}
+    <article data-id="{{video.youtube_id}}">
+      <h3>{{ video.title }}</h3>
+      <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'>
+        <img src='{{ video.thumbnail_url }}' alt=''>
+      </a>
+      <p class='p-description'>{{ video.description }}</p>
+      <p class='p-tags'>{{ video.tags }}</p>
+      <p class='p-channel-title'>{{ video.channel_title }}</p>
+      <p class='p-cat-id' style='display:none;'>{{ video.category_id }}</p>
+      <button class="btn-remove">remove</button>
+    </article>
+
+  {% endfor %}
+
+  <h3>DisLikes</h3>
+  {% for video in user_dislikes_videos %}
+    <article data-id="{{video.youtube_id}}">
+      <h3>{{ video.title }}</h3>
+      <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'>
+        <img src='{{ video.thumbnail_url }}' alt=''>
+      </a>
+      <p class='p-description'>{{ video.description }}</p>
+      <p class='p-tags'>{{ video.tags }}</p>
+      <p class='p-channel-title'>{{ video.channel_title }}</p>
+      <p class='p-cat-id' style='display:none;'>{{ video.category_id }}</p>
+      <button class="btn-remove">remove</button>
+    </article>
+
+  {% endfor %}
+
+  <script src="{% static 'scripts/csrf_helper.js' %}"></script>
+  <script src="{% static 'scripts/profile.js' %}" defer></script>
+
+{% else %}
+  
+  <h1> 403 Forbidden </h1>
+  <h2> You need to Sign In </h2>
+
+{% endif %}
+
 {% endblock %}
