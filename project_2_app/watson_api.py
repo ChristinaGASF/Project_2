@@ -20,8 +20,8 @@ response = naturalLanguageUnderstanding.analyze(
         categories=CategoriesOptions(limit=10),
         sentiment=SentimentOptions(document=True),
         emotion=EmotionOptions(document=True),
-        entities=EntitiesOptions(emotion=True, sentiment=True, limit=10),
-        keywords=KeywordsOptions(emotion=True, sentiment=True, limit=2))).get_result()
+        entities=EntitiesOptions(emotion=True, sentiment=True, limit=30),
+        keywords=KeywordsOptions(emotion=True, sentiment=True, limit=30))).get_result()
 
 
 print(json.dumps(response, indent=2))

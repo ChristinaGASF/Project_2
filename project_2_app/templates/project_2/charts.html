@@ -1,23 +1,26 @@
 {% extends 'project_2/base.html' %}
 {% load staticfiles %}
 
+{% block head %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {packages: ['corechart']});
+  google.charts.setOnLoadCallback(drawSeriesChart);
+  google.charts.setOnLoadCallback(drawVisualization);
+</script>
+{% endblock head%}
 
 {% block chart %}
 
-
-<div class="append" url-endpoint='{% url "api-data" %}'>
-    <h1>Hello World </h1>
-</div>
-<div id="series_chart_div" style="width: 900px; height: 500px;"></div>
-<div id="series_chart_div_key" style="width: 900px; height: 500px;"></div>
-<div id="series_chart_div_entities" style="width: 900px; height: 500px;"></div>
-<div id="chart_div" style="width: 900px; height: 500px;"></div>
-
-
 {% block jquery %}
 <script>
-var endpoint = '/api/data/'
-var rows = [['ID', 'Joy', 'Sadness', 'Fear', 'Anger', 'Disgust']]
+var p = 100
+var endpoint = '/user/api/'
+var entitiesRows = [['ID', 'Joy', 'Sadness', 'Fear', 'Anger', 'Disgust']]
+var entitiesRowsBar = [['ID', 'Joy', 'Sadness', 'Fear', 'Anger', 'Disgust']]
+var keywordsRows = [['ID', 'Joy', 'Anger', 'Sadness', 'Anger', 'Fear', 'Disgust']]
+var keywordsRowsBar = [['ID', 'Joy', 'Anger', 'Sadness', 'Anger', 'Fear', 'Disgust']]
+var emotionRow = [['Label', 'Value']]
 
 $.ajax({
     method: "GET",
@@ -27,37 +30,52 @@ $.ajax({
         console.log(data.customers)
         $('.append').append(data.customers)
         
-
-
-    //       var data = google.visualization.arrayToDataTable([
-    // ['ID', 'Joy', 'Sadness', 'Fear', 'Anger', 'Disgust'],
-    // ['NFL',  .031864, .031864, .019052, .0979, .064185 ],
-    // ['HBO', .158492, .165361, .102052, .100122, .076227],
-    // ['Joe Rogan',  .52387, .468725,  .053806, .135095, .478602],
-    // ['Sous Vide Cooking', .810493, .024876, .066353, .047234, .009014],
-    // ['Sara Silverman', .553425, .077662, .011971, .129018, .223744]
-    // var rows = [['ID', 'Joy', 'Sadness', 'Fear', 'Anger', 'Disgust']]
-    
     for (let i=1; i<data.entities.length; i++){
-    var row = []
-    
-    row.push(data.entities[i].text)
-    row.push(data.entities[i].emotion.joy)
-    row.push(data.entities[i].emotion.sadness)
-    row.push(data.entities[i].emotion.fear)
-    row.push(data.entities[i].emotion.anger)
-    row.push(data.entities[i].emotion.disgust)
+    var entitiesRow = []
 
-    rows.push(row)
+    entitiesRow.push(data.entities[i].text)
+    entitiesRow.push(data.entities[i].emotion.joy * p)
+    entitiesRow.push(data.entities[i].emotion.sadness * p)
+    entitiesRow.push(data.entities[i].emotion.fear * p)
+    entitiesRow.push(data.entities[i].emotion.anger * p)
+    entitiesRow.push(data.entities[i].emotion.disgust * p)
+    if(i<10){
+    entitiesRows.push(entitiesRow)
+    entitiesRowsBar.push(entitiesRow)
+    } else
+    entitiesRows.push(entitiesRow)
     }
-    console.log(row)
-    console.log(rows)
+    console.log(entitiesRow)
+    console.log(entitiesRows)
+    console.log(entitiesRowsBar)
+
+    for (let i=1; i<data.keywords.length; i++){
+    var keywordsRow = []
     
+    keywordsRow.push(data.keywords[i].text)
+    keywordsRow.push(data.keywords[i].emotion.joy * p)
+    keywordsRow.push(data.keywords[i].emotion.anger * p)
+    keywordsRow.push(data.keywords[i].emotion.sadness * p)
+    keywordsRow.push(data.keywords[i].emotion.anger * p)
+    keywordsRow.push(data.keywords[i].emotion.fear * p)
+    keywordsRow.push(data.keywords[i].emotion.disgust * p)
+    if(i<10){
+    keywordsRows.push(keywordsRow)
+    keywordsRowsBar.push(keywordsRow)
+    }
+    keywordsRows.push(keywordsRow)
+    }
+    console.log(keywordsRow)
+    console.log(keywordsRows)
+    console.log(keywordsRowsBar)
 
-
-
-
-
+    emotionRow.push(['Joy',data.emotion.document.emotion.joy *p])
+    emotionRow.push(['Anger',data.emotion.document.emotion.anger * p])
+    emotionRow.push(['Sadness',data.emotion.document.emotion.sadness * p])
+    emotionRow.push(['Fear',data.emotion.document.emotion.fear * p])
+    emotionRow.push(['Disgust',data.emotion.document.emotion.disgust * p])
+    
+    console.log(emotionRow)
     },
     error: function(error_data){
         console.log("error")
@@ -67,64 +85,58 @@ $.ajax({
 </script>
 {% endblock jquery %}
 
-{% block headSentimentEmotion %}
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+{% block headSentimentGuage %}
+
 <script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawSeriesChart);
+  google.charts.load('current', {'packages':['gauge']});
+  google.charts.setOnLoadCallback(drawChart);
 
-function drawSeriesChart() {
+  function drawChart() {
 
-  var data = google.visualization.arrayToDataTable([
-    ['ID', 'Emotion', 'Sentiment', 'Emotion',     'EmotionScore'],
-    ['Sadness',     .21111,       .55555,      'Sadness',  .31111],
-    ['Joy',          .89999,      .55555,      'Joy',      .99999],
-    ['Fear',         .33333,       .55555,      'Fear',      .33333],
-    ['Disgust',     .44444,        .55555,      'Disgust',    .44444],
-    ['Anger',       .55555,         .55555,       'Anger',      .55555]
+    var data = google.visualization.arrayToDataTable(emotionRow);
 
-  ]);
+    var options = {
+      width: 400, height: 120,
+      redFrom: 90, redTo: 100,
+      yellowFrom:75, yellowTo: 90,
+      minorTicks: 5
+    };
 
-  var options = {
-    title: 'Correlation sentiment and emotions',
-    hAxis: {title: 'Emotion'},
-    vAxis: {title: 'Sentiment'},
-    bubble: {textStyle: {fontSize: 11}},
-    animation:{
-        "startup": true,
-        duration: 6000,
-        easing: 'out',
-      },
-  };
+    var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
 
-  var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
-  chart.draw(data, options);
-}
+    chart.draw(data, options);
+
+    setInterval(function() {
+      data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
+      chart.draw(data, options);
+    }, 13000);
+    setInterval(function() {
+      data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
+      chart.draw(data, options);
+    }, 5000);
+    setInterval(function() {
+      data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
+      chart.draw(data, options);
+    }, 26000);
+  }
 </script>
-{% endblock headSentimentEmotion %}
+
+{% endblock headSentimentGuage %}
+
 
 {% block headKeywords %}
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawSeriesChart);
 
 function drawSeriesChart() {
 
-  var data = google.visualization.arrayToDataTable([
-    ['ID', 'Relevance', 'SentimentScore', 'Sentiment',     'SentimentScore'],
-    ['Sous Vide Cooking',     .56122,       .327025,      'Negative',  .327025],
-    ['San Francisco 49ersKyle Shanahan Yesterday', .528599,  -0.959452,  'Negative',  -0.959452],
-    ['Denver Broncos',  .515413,     0,      'Neutral',      0],
-    ['John Oliver',     .44444,        .55555,      'Positive',    .44444],
-    ['Math',       .55555,         -0.259452,       'Negative',      -0.259452]
-
-  ]);
+  var data = google.visualization.arrayToDataTable(keywordsRows);
 
   var options = {
-    title: 'Correlation Between Keyword Sentiment and Relevance',
-    hAxis: {title: 'Relevance'},
-    vAxis: {title: 'Sentiment'},
+    title: 'Keyword correlation Between Joy & Anger ',
+    hAxis: {title: 'Joy'},
+    vAxis: {title: 'Anger'},
+    vAxis: {direction: -1},
     bubble: {textStyle: {fontSize: 11}},
     animation:{
         "startup": true,
@@ -140,22 +152,12 @@ function drawSeriesChart() {
 {% endblock headKeywords %}
 
 {% block headEntities %}
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawSeriesChart);
 
 function drawSeriesChart() {
 
-  var data = google.visualization.arrayToDataTable([
-    ['ID', 'Joy', 'Sadness', 'Fear', 'Anger', 'Disgust'],
-    ['NFL',  .031864, .031864, .019052, .0979, .064185 ],
-    ['HBO', .158492, .165361, .102052, .100122, .076227],
-    ['Joe Rogan',  .52387, .468725,  .053806, .135095, .478602],
-    ['Sous Vide Cooking', .810493, .024876, .066353, .047234, .009014],
-    ['Sara Silverman', .553425, .077662, .011971, .129018, .223744]
-
-  ]);
+  var data = google.visualization.arrayToDataTable(entitiesRows);
 
   var options = {
     title: 'Entity correlation Between Joy & Sadness ',
@@ -178,38 +180,61 @@ function drawSeriesChart() {
 
 
 {% block headEntitiesBar %}
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
   google.charts.setOnLoadCallback(drawVisualization);
 
   function drawVisualization() {
-    // Some raw data (not necessarily accurate)
-    // var data = google.visualization.arrayToDataTable([
-    // // ['ID', 'Joy', 'Sadness', 'Fear', 'Anger', 'Disgust'],
-    // // ['NFL',  .031864, .031864, .019052, .0979, .064185 ],
-    // // ['HBO', .158492, .165361, .102052, .100122, .076227],
-    // // ['Joe Rogan',  .52387, .468725,  .053806, .135095, .478602],
-    // // ['Sous Vide Cooking', .810493, .024876, .066353, .047234, .009014],
-    // // ['Sara Silverman', .553425, .077662, .011971, .129018, .223744]
-    // // ]);
 
-    var data = google.visualization.arrayToDataTable(rows);
+    var data = google.visualization.arrayToDataTable(entitiesRowsBar);
 
     var options = {
-      title : 'Entities by Emotion and Score',
+      title : 'Top 10 Most Relevant Entities by Emotion and Score',
       vAxis: {title: 'Emotion Score'},
       hAxis: {title: 'Entity/Keyword'},
       seriesType: 'bars',
-      series: {5: {type: 'line'}}
+      series: {1: {type: 'line'}}
     };
 
-    var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+    var chart = new google.visualization.ComboChart(document.getElementById('chart_div_entities'));
     chart.draw(data, options);
   }
 </script>
 {% endblock headEntitiesBar %}
 
+{% block headKeywordsBar %}
+<script type="text/javascript">
+  google.charts.setOnLoadCallback(drawVisualization);
 
+  function drawVisualization() {
 
+    var data = google.visualization.arrayToDataTable(keywordsRowsBar);
+
+    var options = {
+      title : 'Top 10 Most Relevant Entities by Emotion and Score',
+      vAxis: {title: 'Emotion Score'},
+      hAxis: {title: 'Entity/Keyword'},
+      seriesType: 'bars',
+      series: {3: {type: 'line'}}
+    };
+
+    var chart = new google.visualization.ComboChart(document.getElementById('chart_div_key'));
+    chart.draw(data, options);
+  }
+</script>
+{% endblock headKeywordsBar %}
+
+<div class="append" url-endpoint='{% url "api-data" %}'>
+  <h1>Hello World </h1>
+</div>
+<div id="chart_div" style="width: 900px; height: 120px;"></div>
+<div id="series_chart_div" style="width: 900px; height: 500px;"></div>
+<div id="series_chart_div_key" style="width: 900px; height: 500px;"></div>
+<div id="series_chart_div_entities" style="width: 900px; height: 500px;"></div>
+<div id="chart_div_entities" style="width: 900px; height: 500px;"></div>
+<div id="chart_div_key" style="width: 900px; height: 500px;"></div>
 {% endblock chart %}
+
+
+
+
+

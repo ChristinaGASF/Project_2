@@ -12,14 +12,9 @@
         <script src="{% static 'scripts/app.js' %}" defer></script>
         <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
         crossorigin="anonymous"></script>
-        {% block headSentimentEmotion %}
-        {% endblock headSentimentEmotion%}
-        {% block headKeywords %}
-        {% endblock headKeywords%}
-        {% block headEntities %}
-        {% endblock headEntities %}
-        {% block headEntitiesBar %}
-        {% endblock headEntitiesBar %}
+        {% block head %}
+        {% endblock head %}
+
 
     </head>
     
@@ -30,6 +25,8 @@
           <a href="{% url 'content' %}">Content</a> | 
           <a href="{% url 'about' %}">About</a> | 
           <a href="{% url 'logout' %}">Logout</a>
+        {% block chart %}
+        {% endblock chart %}
         {% else %}
           <a href="{% url 'about' %}">About</a> | 
           <a href="{% url 'user_login' %}">Sign In</a> | 

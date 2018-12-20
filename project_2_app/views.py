@@ -2,11 +2,12 @@ from django.shortcuts import render, redirect
 from project_2_app.forms import UserForm, UserProfileInfoForm
 from project_2_app.models import UserProfileInfo, Video, Category, Likes
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, QueryDict
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, QueryDict, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import connection
 from django.db.models import Q
+from project_2_app.watson_api import test
 import requests, json, os
 
 
@@ -246,3 +247,12 @@ def add_like_dislike(request):
     else:
         return HttpResponseBadRequest(json.dumps({"message": "bad request method"}),content_type="application/json")
     
+def get_data(request,   ):
+    data = test
+    return JsonResponse(data)
+
+
+def charts(request, *args, **kwargs):
+        return render(request, 'project_2/charts.html',{})
+
+
