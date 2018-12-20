@@ -12,9 +12,10 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
      </head>
      <body>
-    <nav class= "blue darken-4">
-      <div class="nav-wrapper blue darken-4">
-        <a href="#!" class="brand-logo grey-text text-lighten-4">YouTube Analysis</a>
+    <div class="red accent-4 grey-text text-lighten-4"><h3> YourTube. Analyzed.</h3></div>
+    <nav class= "cyan lighten-2">
+      <div class="nav-wrapper cyan lighten-2">
+        <a href="#!" class="brand-logo grey-text text-lighten-4"></a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         
         {% if user.is_authenticated %}
@@ -42,6 +43,8 @@
         {% endif %}
       </div>
     </nav>
+<main>
+
         {% block landing %}
         {% endblock %}
 
@@ -53,24 +56,33 @@
 
         {% block content %}
         {% endblock %}
+        <!-----------------------THIS NEEDS TO BE THE LANDING/INDEX PAGE BLOCK ONCE PATH IS FIXED--------------------------------->
+<div class="card-panel black center-align">
+<img class="center" width="656" src="https://lh3.googleusercontent.com/j2SJC1grxLdL94kX7uB9WclD_nqX49oJs3K82Tok1MaPcx4TvB2m7xmw-Ub4dvFORwPSzruQBWePxtizfuY1r3j4GQvi1G9z=s688">
+</div>
+<div class="card-panel black center-align">
+<img class="center" width="480"  src="https://media.giphy.com/media/l3vR16pONsV8cKkWk/giphy.gif">
+</div>
 
-        <footer class="page-footer blue darken-3">
+<!-----------------------THIS NEEDS TO BE THE LANDING/INDEX PAGE BLOCK ONCE PATH IS FIXED--------------------------------->
+</main>
+        <footer class="page-footer cyan lighten-2">
           <div class="container">
             <div class="row">
                 <div class="col l4 offset-l2 s12">
-                <p class="grey-text text-lighten-3">Web application made in conjunction with
-                    <a class="grey-text text-lighten-3" href="https://developers.google.com/youtube/">YouTube Api</a>,
-                    <a class="grey-text text-lighten-3" href="https://www.ibm.com/watson/developer/">IBM Watson Api</a>,
-                    <a class="grey-text text-lighten-3" href="#!">Charting Api</a>.
+                <p class="grey-text text-lighten-2">Web application made in conjunction with
+                    <a class="grey-text text-lighten-2" href="https://developers.google.com/youtube/" target="_blank">YouTube Api</a>,
+                    <a class="grey-text text-lighten-2" href="https://www.ibm.com/watson/developer/" target="_blank">IBM Watson Api</a>,
+                    <a class="grey-text text-lighten-2" href="#!" target="_blank">Charting Api</a>.
                 </p>
                 
               </div>
             </div>
           </div>
-          <div class="footer-copyright blue darken-4">
+          <div class="footer-copyright red accent-4">
             <div class="container">
             © 2018 Brandon Ford, Kai Wing Clarence Cheung, and Christina Hughes
-            <a class="grey-text text-lighten-4 right" href="https://generalassemb.ly/">General Assembly</a>
+            <a class="grey-text text-lighten-4 right" href="https://generalassemb.ly/" target="_blank">General Assembly</a>
             </div>
           </div>
         </footer>

@@ -3,7 +3,7 @@ from project_2_app.forms import UserForm, UserProfileInfoForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-#import requests, json
+import requests, json
 
 # Create your views here.
 
@@ -96,7 +96,7 @@ def content(request):
 def get_youtube_video_helper(video_list,next_page_token,max_limit):
     if len(video_list)>=max_limit: return
     
-    key= ''
+    key= 'AIzaSyD8O5vCtNWjhEaVSe9jbID-Ne8LtNIsdTo'
     max_results= 10
     part= 'snippet,contentDetails,statistics'
     orderby= 'viewCount'

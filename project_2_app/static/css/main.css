@@ -1,13 +1,26 @@
 * {
 }
 
+links {
+    color:#039be5;
+}
 body {
     background-color: #f5f5f5;
     color:#424242;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
   }
 
-nav {
+main {
+    padding: 2%;
+    flex: 1 0 auto;
+  }
+      
+div{
     padding: 1%;
+}
+nav {
     background-color: #3A3A52;
     color: #EAD5A4;
   }
