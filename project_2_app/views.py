@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from project_2_app.forms import UserForm, UserProfileInfoForm
 from project_2_app.models import UserProfileInfo, Video, Category, Likes
 from django.contrib.auth import authenticate, login, logout
@@ -86,8 +86,7 @@ def about(request): return render(request, 'project_2/about.html')
 ## get youtube videos
 def get_youtube(request): return render(request, 'project_2/youtube.html',{'video_results':get_video_list(20)})
     
-
-
+## register
 def register(request):
     registered = False
     if request.method == 'POST':
@@ -101,6 +100,8 @@ def register(request):
             profile.name = new_user
             if 'profile_pic' in request.FILES:
                 profile.profile_pic = request.FILES['profile_pic']
+            else:
+                profile.profile_pic = 'profile_pics/user_default.png'
             profile.save()
             #print('profile: ',profile)
             registered = True
@@ -114,7 +115,7 @@ def register(request):
         profile_form = UserProfileInfoForm()
     return render(request, 'project_2/register.html', {'user_form':user_form,'profile_form':profile_form,'registered':registered})
 
-
+## user login
 def user_login(request):
     if request.method == 'POST':
         username,password = request.POST.get('username'),request.POST.get('password')
@@ -135,16 +136,17 @@ def user_login(request):
 
 ### LOGIN_REQUIRED VIEWS ###
 
+## user logout
 @login_required
 def user_logout(request):
     logout(request)
     return redirect('index')
 
-
+## display content
 @login_required
 def content_page(request): return render(request, 'project_2/content.html',{'video_results':get_video_list(20)})
 
-
+## profile page
 @login_required
 def profile_page(request):
     user_likes_videos, user_dislikes_videos= [], []
@@ -160,24 +162,34 @@ def profile_page(request):
         'base_url': request.get_host()
     })
 
-
+## edit profile
 @login_required
 def profile_edit(request):
     if request.method == 'PATCH':
+        # update email
         email = json.loads(request.body).get('email')
         with connection.cursor() as cursor:
             cursor.execute("UPDATE AUTH_USER SET email=%s WHERE id=%s;",[email,str(request.user.id)])
             row = cursor.rowcount
             if row>0: 
-                return HttpResponse(json.dumps({"message":"edited"}),content_type="application/json")
+                return HttpResponse(json.dumps({"message":"email edited"}),content_type="application/json")
             else:
                 return HttpResponseNotFound(json.dumps({"message": "record not found"}),content_type="application/json")
-    else:
+    
+    elif request.method == 'POST':
+        # update profile_pic
+        current_user = get_object_or_404(UserProfileInfo,id=request.user.userprofileinfo.id)
+        current_user.profile_pic = request.FILES.get('image')
+        current_user.save()
 
+        return HttpResponse(json.dumps({"message":"pic edited"}),content_type="application/json")
+    else:
         return HttpResponseBadRequest(json.dumps({"message": "bad request method"}),content_type="application/json")
 
 
+### API VIEWS ###
 
+## remove likes / dislikes
 @login_required
 def remove_like_dislike(request):
     if request.method == 'DELETE':
@@ -189,12 +201,8 @@ def remove_like_dislike(request):
             cursor.execute("""
               DELETE FROM PROJECT_2_APP_LIKES
               WHERE id=(
-                SELECT L.id
-                FROM PROJECT_2_APP_VIDEO V, PROJECT_2_APP_LIKES L
-                WHERE V.youtube_id='"""+youtube_id+"""'
-                  AND L.user_id_id="""+str(user_profile_id)+"""
-                  AND L.video_id_id=V.id);
-            """)
+                SELECT L.id FROM PROJECT_2_APP_VIDEO V, PROJECT_2_APP_LIKES L WHERE V.youtube_id=%s AND L.user_id_id= %s AND L.video_id_id=V.id);"""
+                ,[youtube_id,str(user_profile_id)])
             row = cursor.rowcount
             
             if row>0: 
@@ -205,6 +213,7 @@ def remove_like_dislike(request):
     else:
         return HttpResponseBadRequest(json.dumps({"message": "bad request method"}),content_type="application/json")
 
+## add likes / dislikes
 @login_required
 def add_like_dislike(request):
     if request.method == 'POST':
@@ -222,8 +231,7 @@ def add_like_dislike(request):
                 description=data.get("description"),
                 tags=data.get("tags"),
                 thumbnail_url=data.get("thumbnail_url"),
-                category=Category.objects.get(category_id=data.get("category_id"))
-            )
+                category=Category.objects.get(category_id=data.get("category_id")))
             v.save()
             this_video = v
 

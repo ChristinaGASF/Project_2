@@ -23,8 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ['DJANGO_SECRET']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True if 1==1 else False
 
+#ALLOWED_HOSTS = ['localhost']
 ALLOWED_HOSTS = []
 
 
@@ -126,5 +127,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR,]
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
-LOGIN_URL = '/project_2_app/user_login'
+LOGIN_URL = '/login/'
 

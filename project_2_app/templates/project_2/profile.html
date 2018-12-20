@@ -8,9 +8,17 @@
 
   <h1>Hi, {{ user.userprofileinfo }}</h1>
   <h2>PROFILE</h2>
-
-  <img src='{{ user.userprofileinfo.profile_pic.url }}' style='width:120;height:120;'>
   
+  <img class='profile_pic_display' src='{{ user.userprofileinfo.profile_pic.url }}' style='width:120;height:120;'>
+  
+
+  <button name="edit_profile_pic">Edit</button>
+  <form class="update_profile_pic_form">
+    <input type="file" id="profile_pic" name="profile_pic" accept="image/*">
+    <button name="cancel_update_profile_pic">Cancel</button>
+    <button name="save_update_profile_pic">Save</button>
+  </form>
+
   <p>username <span>{{ user.userprofileinfo }}</span></p>
   <p>email address <span id='email'>{{ user.email }}</span></p>
 
