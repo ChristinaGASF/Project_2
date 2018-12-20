@@ -1,9 +1,33 @@
 {% extends 'project_2/base.html' %}
 
+
+
 {% block content %}
 
 {% if user.is_authenticated %}
-<h2>YOUTUBE CONTENT</h2>
+
+  {% load staticfiles %}
+
+  <h1>Hi, {{ user.userprofileinfo }}</h1>
+  <h2>YOUTUBE CONTENT</h2>
+  
+  {% for video in video_results %}
+    <article data-id="{{video.youtube_id}}">
+      <h3>{{ video.title }}</h3>
+      <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'>
+        <img src='{{ video.thumbnail.url }}' alt=''>
+      </a>
+      <p class='p-description'>{{ video.description }}</p>
+      <p class='p-tags'>{{ video.tags }}</p>
+      <p class='p-channel-title'>{{ video.channel_title }}</p>
+      <p class='p-cat-id' style='display:none;'>{{ video.category_id }}</p>
+      <button class="btn-like">Like!</button>
+      <button class="btn-dislike">DisLike :( </button>
+    </article>
+  {% endfor %}
+
+  <script src="{% static 'scripts/csrf_helper.js' %}"></script>
+  <script src="{% static 'scripts/content.js' %}" defer></script>
 
   {% for video in video_results %}
     <article>

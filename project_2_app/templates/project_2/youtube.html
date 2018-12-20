@@ -2,6 +2,7 @@
 
 {% block content %}
 
+<<<<<<< HEAD
 {% for video in video_results %}
   <article>
     <h3>{{ video.youtube_id }}</h3>
@@ -15,4 +16,17 @@
   {% endfor %}
 
 
+=======
+  {% for video in video_results %}
+    <article>
+    <h3>{{ video.title }}</h3>
+    <a href='https://www.youtube.com/watch?v={{video.youtube_id}'>
+        <img src='{{ video.thumbnail.url }}'>
+    </a>
+    <p>{{ video.description }}</p>
+    <p>{{ video.tags }}</p>
+    </article>
+  {% endfor %}
+
+>>>>>>> 11c75d75240ef9899c9ec8c272a5982bc0c26d05
 {% endblock %}

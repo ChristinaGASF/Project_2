@@ -20,6 +20,15 @@ main {
 div{
     padding: 1%;
 }
+
+.card {
+    border-radius: 5px;
+}
+
+.card:hover{
+
+}
+
 nav {
     background-color: #3A3A52;
     color: #EAD5A4;
