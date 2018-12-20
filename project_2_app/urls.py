@@ -18,4 +18,7 @@ urlpatterns= [
     path('user/profile_edit/',views.profile_edit,name='profile_edit'),
     path('user/add_like_dislike/',views.add_like_dislike,name='add_like_dislike'),
     path('user/remove_like_dislike/',views.remove_like_dislike,name='remove_like_dislike'),
+
+    path('video/category_all/',views.videos_all_categories,name='videos_all_categories'),
+    path('video/category_selected/',views.videos_selected_category,name='videos_selected_category'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -15,7 +15,7 @@ key= os.environ['GOOGLAPI']
 ## helper functions
 
 # recursive function pagination
-def get_youtube_video_helper(video_list,next_page_token,max_limit):
+def get_youtube_video_helper(video_list,next_page_token,max_limit,cat_id):
     if len(video_list)>=max_limit: return
     
     max_results= 10
@@ -24,24 +24,30 @@ def get_youtube_video_helper(video_list,next_page_token,max_limit):
 
     base_url= 'https://www.googleapis.com/youtube/v3/videos?part='+part+'&regionCode=US&maxResults='+str(max_results)+'&chart=mostPopular&order='+orderby+'&key='+key
 
+    if cat_id!=-1:
+        base_url+= '&videoCategoryId='+str(cat_id)
+
     if next_page_token != '':
         base_url+= '&pageToken='+next_page_token
-    elif next_page_token=='' and len(video_list)>0: 
-        return
-
+    
     res = requests.get(base_url)
+    print('res= ',res.status_code)
+    if res.status_code!=200: return
+    
     json_res= res.json()
     next_page_token= json_res.get('nextPageToken') if json_res.get('nextPageToken') else ''
+    print ('next_page_token= ',next_page_token)
     videos= json_res.get('items')
     video_list.extend(videos)
+    if next_page_token=='': return 
 
-    get_youtube_video_helper(video_list,next_page_token,max_limit)
+    get_youtube_video_helper(video_list,next_page_token,max_limit,cat_id)
 
 
 # get video list 
-def get_video_list(max_limit):
+def get_video_list(max_limit,cat_id):
     video_list= []
-    get_youtube_video_helper(video_list,'',max_limit)    
+    get_youtube_video_helper(video_list,'',max_limit,cat_id)    
     print(len(video_list))
 
     video_results= []
@@ -84,7 +90,7 @@ def index(request): return render(request,'project_2/landing.html')
 def about(request): return render(request, 'project_2/about.html')
 
 ## get youtube videos
-def get_youtube(request): return render(request, 'project_2/youtube.html',{'video_results':get_video_list(20)})
+def get_youtube(request): return render(request, 'project_2/youtube.html',{'video_results':get_video_list(20,-1)})
     
 ## register
 def register(request):
@@ -115,6 +121,7 @@ def register(request):
         profile_form = UserProfileInfoForm()
     return render(request, 'project_2/register.html', {'user_form':user_form,'profile_form':profile_form,'registered':registered})
 
+
 ## user login
 def user_login(request):
     if request.method == 'POST':
@@ -142,9 +149,30 @@ def user_logout(request):
     logout(request)
     return redirect('index')
 
+
 ## display content
 @login_required
-def content_page(request): return render(request, 'project_2/content.html',{'video_results':get_video_list(20)})
+def content_page(request): 
+    categories = []
+    for cat in Category.objects.all():
+        categories.append({'category_id':cat.category_id,'title':cat.title})
+    return render(request, 'project_2/content.html',{'video_results':get_video_list(20,-1),'categories':categories})
+
+
+@login_required
+def videos_all_categories(request): 
+    if request.method == 'GET':
+        return HttpResponse(json.dumps({"video_results":get_video_list(20,-1)}),content_type="application/json")
+    else:
+        return HttpResponseBadRequest(json.dumps({"message": "bad request method"}),content_type="application/json")
+
+@login_required
+def videos_selected_category(request):
+    if request.method == 'GET':
+        return HttpResponse(json.dumps({"video_results":get_video_list(20,request.GET.get('cat_id'))}),content_type="application/json")
+    else:
+        return HttpResponseBadRequest(json.dumps({"message": "bad request method"}),content_type="application/json")
+
 
 ## profile page
 @login_required
@@ -161,6 +189,7 @@ def profile_page(request):
         'user_dislikes_videos':user_dislikes_videos,
         'base_url': request.get_host()
     })
+
 
 ## edit profile
 @login_required
@@ -213,6 +242,7 @@ def remove_like_dislike(request):
     else:
         return HttpResponseBadRequest(json.dumps({"message": "bad request method"}),content_type="application/json")
 
+
 ## add likes / dislikes
 @login_required
 def add_like_dislike(request):
@@ -231,7 +261,8 @@ def add_like_dislike(request):
                 description=data.get("description"),
                 tags=data.get("tags"),
                 thumbnail_url=data.get("thumbnail_url"),
-                category=Category.objects.get(category_id=data.get("category_id")))
+                category=Category.objects.get(category_id=data.get("category_id"))
+                )
             v.save()
             this_video = v
 
@@ -245,7 +276,7 @@ def add_like_dislike(request):
                 user_id=user_profile,
                 video_id=this_video,
                 like=data.get("like")
-            )
+               )
             l.save()
             message= "saved"
             #lid=l.id

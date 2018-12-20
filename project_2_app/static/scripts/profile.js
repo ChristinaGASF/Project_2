@@ -2,6 +2,7 @@ console.log('in-sanity check');
 
 var $initProfileVal;
 
+// helper function: instant update based on target and id
 function instantUpdateByID(field,target,oldTag,csrfToken) {
     // click on area to change
     $(target).on('click',`${oldTag}[id=${field}]`,function(){
@@ -35,18 +36,27 @@ function instantUpdateByID(field,target,oldTag,csrfToken) {
 
 $(document).ready( function() {
     
+    const csrfToken = getFromCookie('csrftoken');
+
+    // hide update profile_pic form
     $('.update_profile_pic_form').hide();
-    
+
+    // instant update email 
+    instantUpdateByID('email','p','span',csrfToken);
+
+    // update profile_pic button toggle
     $('button[name=edit_profile_pic]').on('click',function(){
         $(this).hide();
         $('.update_profile_pic_form').show();
     });
 
+    // cancel update profile_pic form
     $('button[name=cancel_update_profile_pic]').on('click',function(){
         $('.update_profile_pic_form').hide();
         $('button[name=edit_profile_pic]').show();
     });
 
+    // save update profile_pic form
     $('button[name=save_update_profile_pic]').on('click',function(event){
         event.preventDefault();
         var $profile_pic= $('#profile_pic').val();
@@ -71,14 +81,9 @@ $(document).ready( function() {
             'error': function(e1,e2,e3) { console.log('e1= ',e1,', e2= ',e2,', e3= ',e3); }
         });
         
-        
     });
 
-    const csrfToken = getCookie('csrftoken');
-
-    instantUpdateByID('email','p','span',csrfToken)
-
-
+    // remove video from likes / dislikes list
     $('button.btn-remove').on('click', function() {
         var $parent= $(this).parent();
         var $article_data_id= $parent.attr('data-id');
@@ -98,7 +103,6 @@ $(document).ready( function() {
                     //$(`article[data-id=${$article_data_id}]`).fadeOut();
                     $(`article[data-id=${$article_data_id}]`).remove();
                 }
-                
             }, 
             "error": function(e1,e2,e3) { console.log('e1= ',e1,', e2= ',e2,', e3= ',e3); }
     

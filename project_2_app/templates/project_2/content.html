@@ -9,8 +9,26 @@
   {% load staticfiles %}
 
   <h1>Hi, {{ user.userprofileinfo }}</h1>
-  <h2>YOUTUBE CONTENT</h2>
+  <h2>Trending YouTube Videos</h2>
   
+  <button class='show-search'>Search Option</button>
+  <div class='search_videos'>
+    <button type='button' class='btn-get-all'>
+      Get Trending Videos from all categories
+    </button>
+    Or
+    <select class="category">
+      {% for cat in categories %}
+        <option value='{{ cat.category_id }}'>{{ cat.title }}</option>
+      {% endfor %}
+    </select>
+    <button type='button' class='btn-get-selected'>
+      Get from this Category
+    </button>
+  </div>
+  
+  
+  <div id='video_list'>
   {% for video in video_results %}
     <article data-id="{{video.youtube_id}}">
       <h3>{{ video.title }}</h3>
@@ -25,6 +43,7 @@
       <button class="btn-dislike">DisLike :( </button>
     </article>
   {% endfor %}
+  </div>
 
   <script src="{% static 'scripts/csrf_helper.js' %}"></script>
   <script src="{% static 'scripts/content.js' %}" defer></script>
