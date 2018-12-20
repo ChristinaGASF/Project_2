@@ -153,17 +153,17 @@ def profile_page(request):
     dislikes_list= Likes.objects.filter(user_id=user_id,like=False)
     append_likes_dislikes_videos_list(likes_list,user_likes_videos)
     append_likes_dislikes_videos_list(dislikes_list,user_dislikes_videos)
-    
+    print('host:',request.get_host())
     return render(request, 'project_2/profile.html',{
         'user_likes_videos':user_likes_videos,
-        'user_dislikes_videos':user_dislikes_videos
+        'user_dislikes_videos':user_dislikes_videos,
+        'base_url': request.get_host()
     })
 
 
 @login_required
 def profile_edit(request):
     if request.method == 'PATCH':
-
         email = json.loads(request.body).get('email')
         with connection.cursor() as cursor:
             cursor.execute("UPDATE AUTH_USER SET email=%s WHERE id=%s;",[email,str(request.user.id)])

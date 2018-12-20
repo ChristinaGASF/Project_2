@@ -9,6 +9,8 @@
   <h1>Hi, {{ user.userprofileinfo }}</h1>
   <h2>PROFILE</h2>
 
+  <img src='{{ user.userprofileinfo.profile_pic.url }}' style='width:120;height:120;'>
+  
   <p>username <span>{{ user.userprofileinfo }}</span></p>
   <p>email address <span id='email'>{{ user.email }}</span></p>
 
