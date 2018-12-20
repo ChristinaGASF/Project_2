@@ -7,46 +7,104 @@
 {% if user.is_authenticated %}
 
   {% load staticfiles %}
+<script>$( document ).ready(function(){$(".button-collapse").sideNav();});</script>
 
-  <h1>Hi, {{ user.userprofileinfo }}</h1>
-  <h2>Trending YouTube Videos</h2>
+  <h4>Hello {{ user.userprofileinfo }},</h4>
+  <h5>Trending on YouTube today...</h5>
   
-  <button class='show-search'>Search Option</button>
-  <div class='search_videos'>
-    <button type='button' class='btn-get-all'>
-      Get Trending Videos from all categories
+  <button class="show-search amber accent-3">Search Option</button>
+
+  <div class="search_videos">
+    <button type="button amber accent-3" class="btn-get-all">
+      Get Trending Videos from All Categories
     </button>
+
     Or
+
     <select class="category">
       {% for cat in categories %}
         <option value='{{ cat.category_id }}'>{{ cat.title }}</option>
       {% endfor %}
     </select>
-    <button type='button' class='btn-get-selected'>
+
+    <button type="button  amber accent-3" class="btn-get-selected">
       Get from this Category
     </button>
   </div>
   
   
-  <div id='video_list'>
+  <div id="video_list">
   {% for video in video_results %}
     <article data-id="{{video.youtube_id}}">
-      <h3>{{ video.title }}</h3>
-      <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'>
-        <img src='{{ video.thumbnail.url }}' alt=''>
-      </a>
-      <p class='p-description'>{{ video.description }}</p>
-      <p class='p-tags'>{{ video.tags }}</p>
-      <p class='p-channel-title'>{{ video.channel_title }}</p>
-      <p class='p-cat-id' style='display:none;'>{{ video.category_id }}</p>
-      <button class="btn-like">Like!</button>
-      <button class="btn-dislike">DisLike :( </button>
+
+    
+  <div class="row">
+    <div class="col 6 l6">
+      <div class="card">
+                <div class="card-content">
+        <div class="card-title">{{ video.title }}</div>
+        </div>
+        <div class="card-image">
+            <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'>
+            <img src='{{ video.thumbnail.url }}' alt=''></a>
+          </div>
+        <div class="card-content">
+        
+          <p class='p-description truncate'>{{ video.description }}</p>
+        </div>
+        <div class="card-action">
+      <button class="btn-like waves-effect waves-light light-blue darken-1 btn"><i class="material-icons right">thumb_up</i>Like</button>
+      <button class="btn-dislike waves-effect waves-light  red accent-4 btn"><i class="material-icons right">thumb_down</i>DisLike</button>
+
+      
+
+        </div>
+      </div>
+    </div>
+  </div>
+    
+    
+    
     </article>
+
   {% endfor %}
+
   </div>
 
   <script src="{% static 'scripts/csrf_helper.js' %}"></script>
   <script src="{% static 'scripts/content.js' %}" defer></script>
+
+  {% for video in video_results %}
+
+    <article>
+
+
+  <div class="row">
+    <div class="col 6 l6">
+      <div class="card">
+                <div class="card-content">
+        <div class="card-title">{{ video.title }}</div>
+        </div>
+        <div class="card-image">
+            <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'>
+            <img src='{{ video.thumbnail.url }}' alt=''></a>
+          </div>
+        <div class="card-content">
+        
+          <p class='p-description truncate'>{{ video.description }}</p>
+        </div>
+        <div class="card-action">
+      <button class="btn-like waves-effect waves-light light-blue darken-1 btn"><i class="material-icons right">thumb_up</i>Like</button>
+      <button class="btn-dislike waves-effect waves-light  red accent-4 btn"><i class="material-icons right">thumb_down</i>DisLike</button>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+    </article>
+  {% endfor %}
 
 {% else %}
   <h1> 403 Forbidden </h1>
