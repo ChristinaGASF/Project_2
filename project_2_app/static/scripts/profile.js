@@ -51,7 +51,8 @@ $(document).ready( function() {
     });
 
     // cancel update profile_pic form
-    $('button[name=cancel_update_profile_pic]').on('click',function(){
+    $('button[name=cancel_update_profile_pic]').on('click',function(event){
+        event.preventDefault();
         $('.update_profile_pic_form').hide();
         $('button[name=edit_profile_pic]').show();
     });
@@ -74,6 +75,7 @@ $(document).ready( function() {
             'success': function(json, textStatus, xhr) {
                 console.log(json);
                 if (xhr.status==200) {
+                    $('img.profile_pic_display').attr('src',json.img_url);
                     $('.update_profile_pic_form').hide();
                     $('button[name=edit_profile_pic]').show();
                 }

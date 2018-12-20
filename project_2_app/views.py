@@ -211,7 +211,7 @@ def profile_edit(request):
         current_user.profile_pic = request.FILES.get('image')
         current_user.save()
 
-        return HttpResponse(json.dumps({"message":"pic edited"}),content_type="application/json")
+        return HttpResponse(json.dumps({"message":"pic edited","img_url":current_user.profile_pic.url}),content_type="application/json")
     else:
         return HttpResponseBadRequest(json.dumps({"message": "bad request method"}),content_type="application/json")
 
