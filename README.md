@@ -1,4 +1,4 @@
-# Project 2 [NAME?]
+# Project 2 YourTube. Analyzed.
 
 ## Description: 
 Short paragraph (2-3 sentences) ["elevator pitch"] describing what your project does
@@ -18,8 +18,7 @@ Short paragraph (2-3 sentences) ["elevator pitch"] describing what your project 
 - Python
 - Django
 - PostgresSQL
-### YouTube API demo (using Express, Ajax)
-[Link](https://github.com/ChristinaGASF/project_2/tree/youtube_api_demo/youtube-api-node)
+#### -YouTube API demo (using Express, Ajax) [Link](https://github.com/ChristinaGASF/project_2/tree/youtube_api_demo/youtube-api-node)
 - Watson API
 
 ## Futher Exploration Goals
@@ -48,7 +47,7 @@ Short paragraph (2-3 sentences) ["elevator pitch"] describing what your project 
 - sign out from content | profile page
 
 ## Color Scheme
-<img src=>
+<img src=https://github.com/ChristinaGASF/project_2/blob/master/project_2_app/media/color_scheme.png>
 
 ## Clips of Code
 
