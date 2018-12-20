@@ -4,16 +4,14 @@ from project_2_app.models import UserProfileInfo, Video, Category, Likes
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseNotFound, QueryDict
 from django.contrib.auth.decorators import login_required
-<<<<<<< HEAD
 import requests, json
-=======
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import connection
 from django.db.models import Q
 import requests, json, os
 
 
-key= os.environ['GOOGLAPI']
+key= 'AIzaSyD8O5vCtNWjhEaVSe9jbID-Ne8LtNIsdTo'
 
 ## helper functions
 
@@ -77,7 +75,6 @@ def append_likes_dislikes_videos_list(likes_dislikes_list,result_list):
         })
 
 
->>>>>>> 11c75d75240ef9899c9ec8c272a5982bc0c26d05
 
 # Create your views here.
 
@@ -146,50 +143,7 @@ def user_logout(request):
 
 
 @login_required
-<<<<<<< HEAD
-def content(request): 
-    video_list= []
-    max_limit= 20
-    get_youtube_video_helper(video_list,'',max_limit)
-    
-    print(len(video_list))
-    
-    #print(video_list)
-    video_results= []
-    for video in video_list:
-        yid= video.get('id')
-        snippet= video.get('snippet')
-        title= snippet.get('title')
-        descrp= snippet.get('description')
-        thumbnail= snippet.get('thumbnails').get('default')
-        channel_title= snippet.get('channelTitle')
-        cat_id= snippet.get('categoryId')
-        print(yid)
-        print(title)
-        print(descrp)
-        print(thumbnail)
-        print(channel_title)
-        print(cat_id)
-        video_results.append({'youtube_id': yid, 
-                              'title': title, 
-                              'description': descrp,
-                              'thumbnail': thumbnail,
-                              'channel_title': channel_title,
-                              'category_id': cat_id})
-
-    return render(request, 'project_2/content.html',{'video_results':video_results})
-
-## recursive function pagination
-def get_youtube_video_helper(video_list,next_page_token,max_limit):
-    if len(video_list)>=max_limit: return
-    
-    key= 'AIzaSyD8O5vCtNWjhEaVSe9jbID-Ne8LtNIsdTo'
-    max_results= 10
-    part= 'snippet,contentDetails,statistics'
-    orderby= 'viewCount'
-=======
 def content_page(request): return render(request, 'project_2/content.html',{'video_results':get_video_list(20)})
->>>>>>> 11c75d75240ef9899c9ec8c272a5982bc0c26d05
 
 
 @login_required

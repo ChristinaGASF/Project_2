@@ -10,12 +10,7 @@ urlpatterns= [
     path('register/',views.register,name='register'),
     path('login/',views.user_login,name='user_login'),
     path('logout/',views.user_logout,name='logout'),
-<<<<<<< HEAD
-    path('about/',views.about,name='about'),
-    path('youtube/',views.get_youtube,name='youtube'),
-=======
->>>>>>> 11c75d75240ef9899c9ec8c272a5982bc0c26d05
-    #path('',views.analysis,name='analysis'),
+    # path('',views.analysis,name='analysis'),
     path('profile/',views.profile_page,name='profile'),
     path('content/',views.content_page,name='content'),
     path('youtube/',views.get_youtube,name='get_youtube'),
