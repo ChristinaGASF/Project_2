@@ -1,89 +1,153 @@
 {% extends 'project_2/base.html' %}
 {% load staticfiles %}
 
-{% block head %}
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">
-  google.charts.load('current', {packages: ['corechart']});
-  google.charts.setOnLoadCallback(drawSeriesChart);
-  google.charts.setOnLoadCallback(drawVisualization);
-</script>
-{% endblock head%}
+
 
 {% block chart %}
 
 {% block jquery %}
 <script>
-var p = 100
-var endpoint = '/user/api/'
-var entitiesRows = [['ID', 'Joy', 'Sadness', 'Fear', 'Anger', 'Disgust']]
-var entitiesRowsBar = [['ID', 'Joy', 'Sadness', 'Fear', 'Anger', 'Disgust']]
-var keywordsRows = [['ID', 'Joy', 'Anger', 'Sadness', 'Anger', 'Fear', 'Disgust']]
-var keywordsRowsBar = [['ID', 'Joy', 'Anger', 'Sadness', 'Anger', 'Fear', 'Disgust']]
-var emotionRow = [['Label', 'Value']]
+  var p = 100
+  var endpoint = '/user/api/'
+  var entitiesRows = [['ID', 'Joy', 'Sadness', 'Fear', 'Anger', 'Disgust']]
+  var entitiesRowsBar = [['ID', 'Joy', 'Sadness', 'Fear', 'Anger', 'Disgust']]
+  var keywordsRows = [['ID', 'Joy', 'Anger', 'Sadness', 'Anger', 'Fear', 'Disgust']]
+  var keywordsRowsBar = [['ID', 'Joy', 'Anger', 'Sadness', 'Anger', 'Fear', 'Disgust']]
+  var emotionRow = [['Label', 'Value']]
+  var emotionRowsBar = [['ID','Joy', 'Anger', 'Sadness', 'Fear', 'Disgust', 'Sentiment']]
+  var categoriesRows = [['ID', 'Categories', 'Confidence Score' ]]
+  var categoriesRowsBar = [['ID', 'Categories', 'Confidence Score' ]]
+  
+  $.ajax({
+      method: "GET",
+      url: endpoint,
+      success: function(data){
+          console.log(data)
 
-$.ajax({
-    method: "GET",
-    url: endpoint,
-    success: function(data){
-        console.log(data)
-        console.log(data.customers)
-        $('.append').append(data.customers)
-        
-    for (let i=1; i<data.entities.length; i++){
-    var entitiesRow = []
+      for (let i=1; i<data.entities.length; i++){
+      var entitiesRow = []
+  
+      entitiesRow.push(data.entities[i].text)
+      entitiesRow.push(data.entities[i].emotion.joy * p)
+      entitiesRow.push(data.entities[i].emotion.sadness * p)
+      entitiesRow.push(data.entities[i].emotion.fear * p)
+      entitiesRow.push(data.entities[i].emotion.anger * p)
+      entitiesRow.push(data.entities[i].emotion.disgust * p)
+      if(i<10){
+      entitiesRows.push(entitiesRow)
+      entitiesRowsBar.push(entitiesRow)
+      } else
+      entitiesRows.push(entitiesRow)
+      }
+      
+      console.log(entitiesRows)
+      console.log(entitiesRowsBar)
+  
+      for (let i=1; i<data.keywords.length; i++){
+      var keywordsRow = []
+      
+      keywordsRow.push(data.keywords[i].text)
+      keywordsRow.push(data.keywords[i].emotion.joy * p)
+      keywordsRow.push(data.keywords[i].emotion.anger * p)
+      keywordsRow.push(data.keywords[i].emotion.sadness * p)
+      keywordsRow.push(data.keywords[i].emotion.anger * p)
+      keywordsRow.push(data.keywords[i].emotion.fear * p)
+      keywordsRow.push(data.keywords[i].emotion.disgust * p)
+      if(i<10){
+      keywordsRows.push(keywordsRow)
+      keywordsRowsBar.push(keywordsRow)
+      }
+      keywordsRows.push(keywordsRow)
+      }
+      console.log(keywordsRow)
+      console.log(keywordsRows)
+      console.log(keywordsRowsBar)
+  
+      emotionRow.push(['Joy',data.emotion.document.emotion.joy *p])
+      emotionRow.push(['Anger',data.emotion.document.emotion.anger * p])
+      emotionRow.push(['Sadness',data.emotion.document.emotion.sadness * p])
+      emotionRow.push(['Fear',data.emotion.document.emotion.fear * p])
+      emotionRow.push(['Disgust',data.emotion.document.emotion.disgust * p])
+      
+      console.log(emotionRow)
 
-    entitiesRow.push(data.entities[i].text)
-    entitiesRow.push(data.entities[i].emotion.joy * p)
-    entitiesRow.push(data.entities[i].emotion.sadness * p)
-    entitiesRow.push(data.entities[i].emotion.fear * p)
-    entitiesRow.push(data.entities[i].emotion.anger * p)
-    entitiesRow.push(data.entities[i].emotion.disgust * p)
-    if(i<10){
-    entitiesRows.push(entitiesRow)
-    entitiesRowsBar.push(entitiesRow)
-    } else
-    entitiesRows.push(entitiesRow)
-    }
-    console.log(entitiesRow)
-    console.log(entitiesRows)
-    console.log(entitiesRowsBar)
+      emotionRowsBar.push(["",
+      data.emotion.document.emotion.joy *p,
+      data.emotion.document.emotion.anger * p,
+      data.emotion.document.emotion.sadness * p,
+      data.emotion.document.emotion.fear * p,
+      data.emotion.document.emotion.disgust * p,
+      data.sentiment.document.score *p])
+      
+      console.log(emotionRowsBar)
 
-    for (let i=1; i<data.keywords.length; i++){
-    var keywordsRow = []
-    
-    keywordsRow.push(data.keywords[i].text)
-    keywordsRow.push(data.keywords[i].emotion.joy * p)
-    keywordsRow.push(data.keywords[i].emotion.anger * p)
-    keywordsRow.push(data.keywords[i].emotion.sadness * p)
-    keywordsRow.push(data.keywords[i].emotion.anger * p)
-    keywordsRow.push(data.keywords[i].emotion.fear * p)
-    keywordsRow.push(data.keywords[i].emotion.disgust * p)
-    if(i<10){
-    keywordsRows.push(keywordsRow)
-    keywordsRowsBar.push(keywordsRow)
-    }
-    keywordsRows.push(keywordsRow)
-    }
-    console.log(keywordsRow)
-    console.log(keywordsRows)
-    console.log(keywordsRowsBar)
+      for (let i=1; i<data.categories.length; i++){
+      var categoriesRow = []
+      
+      categoriesRow.push(data.categories[i].label)
+      categoriesRow.push(data.categories[i].score * p)
+      if(i<10){
+      categoriesRows.push(categoriesRow)
+      categoriesRowsBar.push(categoriesRow)
+      }
+      categoriesRows.push(categoriesRow)
+      }
+      console.log(categoriesRows)
+      console.log(categoriesRowsBar)
+      console.log(entitiesRows)
+      
+      console.log(entitiesRows)
+      console.log(entitiesRowsBar)
+      console.log(keywordsRows)
+      console.log(keywordsRowsBar)
+      console.log(emotionRow)
+      console.log(emotionRowsBar)
+      console.log(categoriesRows)
+      console.log(categoriesRowsBar)
 
-    emotionRow.push(['Joy',data.emotion.document.emotion.joy *p])
-    emotionRow.push(['Anger',data.emotion.document.emotion.anger * p])
-    emotionRow.push(['Sadness',data.emotion.document.emotion.sadness * p])
-    emotionRow.push(['Fear',data.emotion.document.emotion.fear * p])
-    emotionRow.push(['Disgust',data.emotion.document.emotion.disgust * p])
-    
-    console.log(emotionRow)
-    },
-    error: function(error_data){
-        console.log("error")
-        console.log(error_data)
-    }
-})
-</script>
+      drawSeriesChart();
+
+      },
+      error: function(error_data){
+          console.log("error")
+          console.log(error_data)
+      }
+  })
+  </script>
 {% endblock jquery %}
+
+{% block test %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawSeriesChart);
+
+let drawSeriesChart = () => {
+
+  var data = google.visualization.arrayToDataTable(entitiesRows);
+
+  var options = {
+    title: 'Correlation between life expectancy, fertility rate ' +
+    'and population of some world countries (2010)',
+    hAxis: {title: 'Life Expectancy'},
+    vAxis: {title: 'Fertility Rate'},
+    bubble: {textStyle: {fontSize: 11}}
+  };
+
+  var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
+  chart.draw(data, options);
+}
+</script>
+{% endblock test%}
+
+{% block head %}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  google.charts.load('current', {packages: ['corechart']});
+  // google.charts.setOnLoadCallback(drawSeriesChart);
+  // google.charts.setOnLoadCallback(drawVisualization);
+</script>
+{% endblock head%}
 
 {% block headSentimentGuage %}
 
@@ -123,6 +187,31 @@ $.ajax({
 
 {% endblock headSentimentGuage %}
 
+{% block headSentimentBar %}
+<script type="text/javascript">
+  google.charts.setOnLoadCallback(drawVisualization);
+
+  function drawVisualization() {
+
+    var data = google.visualization.arrayToDataTable(emotionRowsBar);
+
+    var options = {
+      title : 'Emotional Alaysis of Likes',
+      vAxis: {title: 'Percentage'},
+      seriesType: 'bars',
+      animation:{
+        "startup": true,
+        duration: 6000,
+        easing: 'out',
+      },
+
+    };
+
+    var chart = new google.visualization.ComboChart(document.getElementById('chart_div_emotion'));
+    chart.draw(data, options);
+  }
+</script>
+{% endblock headSentimentBar %}
 
 {% block headKeywords %}
 <script type="text/javascript">
@@ -135,13 +224,14 @@ function drawSeriesChart() {
   var options = {
     title: 'Keyword correlation Between Joy & Anger ',
     hAxis: {title: 'Joy'},
-    vAxis: {title: 'Anger'},
-    vAxis: {direction: -1},
+    vAxis: {title: 'Anger',
+    direction: -1
+    },
     bubble: {textStyle: {fontSize: 11}},
     animation:{
         "startup": true,
         duration: 6000,
-        easing: 'out',
+        easing: 'inAndOut',
       },
   };
 
@@ -162,8 +252,9 @@ function drawSeriesChart() {
   var options = {
     title: 'Entity correlation Between Joy & Sadness ',
     hAxis: {title: 'Joy'},
-    vAxis: {title: 'Sadness'},
-    vAxis: {direction: -1},
+    vAxis: {title: 'Sadness',
+            direction: -1
+    },
     bubble: {textStyle: {fontSize: 11}},
     animation:{
         "startup": true,
@@ -192,7 +283,12 @@ function drawSeriesChart() {
       vAxis: {title: 'Emotion Score'},
       hAxis: {title: 'Entity/Keyword'},
       seriesType: 'bars',
-      series: {1: {type: 'line'}}
+      series: {1: {type: 'line'}},
+      animation:{
+        "startup": true,
+        duration: 6000,
+        easing: 'out',
+      },
     };
 
     var chart = new google.visualization.ComboChart(document.getElementById('chart_div_entities'));
@@ -214,7 +310,13 @@ function drawSeriesChart() {
       vAxis: {title: 'Emotion Score'},
       hAxis: {title: 'Entity/Keyword'},
       seriesType: 'bars',
-      series: {3: {type: 'line'}}
+      series: {3: {type: 'line'}},
+      
+      animation:{
+        "startup": true,
+        duration: 6000,
+        easing: 'in',
+      },
     };
 
     var chart = new google.visualization.ComboChart(document.getElementById('chart_div_key'));
@@ -226,12 +328,15 @@ function drawSeriesChart() {
 <div class="append" url-endpoint='{% url "api-data" %}'>
   <h1>Hello World </h1>
 </div>
-<div id="chart_div" style="width: 900px; height: 120px;"></div>
 <div id="series_chart_div" style="width: 900px; height: 500px;"></div>
+<div id="chart_div" style="width: 900px; height: 120px;"></div>
+<div id="chart_div_emotion" style="width: 900px; height: 500px;"></div>
+
 <div id="series_chart_div_key" style="width: 900px; height: 500px;"></div>
 <div id="series_chart_div_entities" style="width: 900px; height: 500px;"></div>
 <div id="chart_div_entities" style="width: 900px; height: 500px;"></div>
 <div id="chart_div_key" style="width: 900px; height: 500px;"></div>
+
 {% endblock chart %}
 
 
