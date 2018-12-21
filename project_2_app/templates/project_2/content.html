@@ -8,14 +8,17 @@
 
 <script>$( document ).ready(function(){$(".button-collapse").sideNav();});</script>
 
+<div>
 <h4>Hello {{ user.userprofileinfo }},</h4>
+<h5>Here's today's Top Trending on YouTube content.</h5>
+</div>
   
 <!--BUTTONS-->
 
 <div class="row light-blue darken-1">
 
 <div class="col s4 hoverable">
-    <button class="btn-get-all " type="submit" name="action">Top Trending on YouTube today from All Categories
+    <button class="btn-get-all " type="submit" name="action"> All Categories
     </button>
 </div>
 
@@ -28,7 +31,7 @@
 </div>
 
 <div class="col s4 hoverable">
-    <button type="button" class="btn-get-selected ">Get from this Category</button>
+    <button type="button" class="btn-get-selected ">From this Category</button>
 </div>
 
 </div>
