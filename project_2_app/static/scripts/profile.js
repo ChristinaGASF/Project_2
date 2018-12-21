@@ -57,6 +57,10 @@ $(document).ready( function() {
         $('button[name=edit_profile_pic]').show();
     });
 
+    $('button[name=analyze]').on('click',function(){
+        window.location.href='/analysis/';
+    });
+
     // save update profile_pic form
     $('button[name=save_update_profile_pic]').on('click',function(event){
         event.preventDefault();
@@ -82,7 +86,6 @@ $(document).ready( function() {
             },
             'error': function(e1,e2,e3) { console.log('e1= ',e1,', e2= ',e2,', e3= ',e3); }
         });
-        
     });
 
     // remove video from likes / dislikes list
@@ -107,11 +110,7 @@ $(document).ready( function() {
                 }
             }, 
             "error": function(e1,e2,e3) { console.log('e1= ',e1,', e2= ',e2,', e3= ',e3); }
-    
         });
-
-
     });
-
     
 });

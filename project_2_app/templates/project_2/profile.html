@@ -13,15 +13,16 @@
   
 
   <button name="edit_profile_pic">Edit</button>
-  <form class="update_profile_pic_form">
+  <div class="update_profile_pic_form">
     <input type="file" id="profile_pic" name="profile_pic" accept="image/*">
     <button name="cancel_update_profile_pic">Cancel</button>
     <button name="save_update_profile_pic">Save</button>
-  </form>
+  </div>
 
   <p>username <span>{{ user.userprofileinfo }}</span></p>
   <p>email address <span id='email'>{{ user.email }}</span></p>
 
+  <button name="analyze">Analyze</button>
 
   <h3>Likes</h3>
   {% for video in user_likes_videos %}

@@ -1,15 +1,8 @@
 {% extends 'project_2/base.html' %}
 
-{% block analysis %}
+{% load staticfiles %}
 
-{% if user.is_authenticated %}
-
-  {% load staticfiles %}
-  <h2>ANALYSIS</h2>
-
-  <textarea style="resize:none;height:20vh;width:50vw;" disabled>
-  {{ watson_response }}
-  </textarea>
+{% block chart %}
 
   <div id="chart_div" style="width: 900px; height: 120px;"></div>
   <div id="chart_div_emotion" style="width: 900px; height: 500px;"></div>
@@ -18,10 +11,5 @@
   <div id="chart_div_entities" style="width: 900px; height: 500px;"></div>
   <div id="chart_div_key" style="width: 900px; height: 500px;"></div>
   <script src="{% static 'scripts/chart.js' %}"></script>
-
-{% else %}
-  <h1> 403 Forbidden </h1>
-  <h2> You need to Sign In </h2>
-{% endif %}
 
 {% endblock %}

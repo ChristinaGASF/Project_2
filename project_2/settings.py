@@ -16,17 +16,18 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+STATIC_DIR = os.path.join(BASE_DIR,'project_2_app/static')
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['DJANGO_SECRET']
+SECRET_KEY = '2!ke3#&qut^%)a-$)if9a_rq)nltzq=*1ue)*z7(fe$)yp=*&8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True if 1==1 else False
+DEBUG = False or 0
 
-#ALLOWED_HOSTS = ['localhost']
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*'] 
 
 
 # Application definition
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -52,6 +54,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'project_2.urls'
+
+TEMPLATE_DIR = os.path.join(BASE_DIR,'project_2_app/templates')
 
 TEMPLATES = [
     {
@@ -119,13 +123,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
-TEMPLATE_DIR = os.path.join(BASE_DIR,'project_2_app/templates')
-STATIC_DIR = os.path.join(BASE_DIR,'project_2_app/static')
-MEDIA_DIR = os.path.join(BASE_DIR,'project_2_app/media')
 
-STATIC_URL = '/static/'
+
+STATIC_URL = '/static/' 
 STATICFILES_DIRS = [STATIC_DIR,]
-MEDIA_ROOT = MEDIA_DIR
-MEDIA_URL = '/media/'
-LOGIN_URL = '/login/'
 
+MEDIA_DIR = os.path.join(BASE_DIR,'project_2_app/static/media')
+MEDIA_ROOT = MEDIA_DIR
+MEDIA_URL = '/static/media/'
+
+
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
