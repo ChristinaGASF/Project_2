@@ -4,14 +4,21 @@
 
 {% if user.is_authenticated %}
 
-  {% load staticfiles %}
-  <script>$( document ).ready(function(){$(".button-collapse").sideNav();});</script>
-  <div class="row">
+{% load staticfiles %}
+<script>$( document ).ready(function(){$(".button-collapse").sideNav();});</script>
 
-    <div class="col 1">
-      <div class="card-panel amber accent-3">
+<!-------------------------------------------------------------PROFILE-->
+<div class="row">
+
+<div class="col s3">
+
+
+    <div class="row">
+
+      <div class="col 1">
+      <div class="card-panel">
         
-        <span class="white-text">
+  <span class="">
         <h4>Hello {{ user.userprofileinfo }},</h4>
         <img class='profile_pic_display circle center' src='{{ user.userprofileinfo.profile_pic.url }}' style='width:120;height:120;'>
   
@@ -20,61 +27,11 @@
         <p>username <span>{{ user.userprofileinfo }}</span></p>
         <p>email address <span id='email'>{{ user.email }}</span></p>
         </blockquote>
-
-<button name="analysis">Analyze</button>
-        </span>
-
       </div>
-    </div>
+      </div>
 
-  <div class="">
-  <row>
-  <div class="light-blue darken-1 grey-text text-lighten-4">
-    <h5>LIKES</h5>
-  </div>
-  </row>
-
-
-  {% for video in user_likes_videos %}
-    <article data-id="{{video.youtube_id}}">
-      <h3>{{ video.title }}</h3>
-      <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'>
-        <img src='{{ video.thumbnail_url }}' alt=''>
-      </a>
-      <p class='p-description'>{{ video.description }}</p>
-      <p class='p-tags'>{{ video.tags }}</p>
-      <p class='p-channel-title'>{{ video.channel_title }}</p>
-      <p class='p-cat-id' style='display:none;'>{{ video.category_id }}</p>
-      <button class="btn-remove">remove</button>
-    </article>
-
-  {% endfor %}
-
-<row>
-  <div class="red accent-4 grey-text text-lighten-4">
-     <h5>DISLIKES</h5>
-  </div>
- </row>
-
-  {% for video in user_dislikes_videos %}
-    <article data-id="{{video.youtube_id}}">
-      <h3>{{ video.title }}</h3>
-      <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'>
-        <img src='{{ video.thumbnail_url }}' alt=''>
-      </a>
-      <p class='p-description'>{{ video.description }}</p>
-      <p class='p-tags'>{{ video.tags }}</p>
-      <p class='p-channel-title'>{{ video.channel_title }}</p>
-      <p class='p-cat-id' style='display:none;'>{{ video.category_id }}</p>
-      <button class="btn-remove">remove</button>
-    </article>
-
-  {% endfor %}
-  </div>
-</div>
-
-<div class="row">
-<div class="col 1">
+      <div class="row">
+      <div class="col 1">
 
         <button name="edit_profile_pic">Update Profile Photo</button>
         <form class="update_profile_pic_form">
@@ -83,15 +40,129 @@
         <button name="save_update_profile_pic">Save</button>
         </form>
 
+      </div>
+      </div>
+
+  <div class="row">
+  <div class="col 1">
+        <div class="card-panel amber accent-3">
+        <button name="analysis" class="">Analyze</button>
+  </div>
+  </div>
+  </div>
+</span>
+
+      
 </div>
 </div>
 
+<div class="col s9">
+<!-------------------------------------------------------------LIKES-->
+
+    <div class="row">
+  
+      <div class="light-blue darken-1 grey-text text-lighten-4">
+      <h5>LIKES</h5>
+      </div>
+    </div>
 
 
+  {% for video in user_likes_videos %}
+
+
+<article data-id="{{video.youtube_id}}">
+
+  <div class="row">
+    <div class="col s12">
+      <div class="card">
+
+        <div class="card-content">
+          <div class="card-title">{{ video.title }}</div>
+        </div>
+
+        <div class="card-image">
+          <a href="https://www.youtube.com/watch?v={{video.youtube_id}}">
+            <img src='{{ video.thumbnail_url }}' alt=''></a>
+        </div>
+        
+        <div class="card-content">
+          <p class="p-description style='display:none;">{{ video.description }}</p>
+        </div>
+
+        <p class='p-channel-title' style='display:none;'>{{ video.channel_title }}</p>
+        <p class='p-cat-id' style='display:none;'>{{ video.category_id }}</p>
+        <p class='p-tags' style='display:none;'>{{ video.tags }}</p>
+
+        
+          <div class="row">
+            <button class="btn-remove">remove</button>
+          
+        </div>
+
+      
+      </div>
+    </div>
+  </div>
+    
+</article>
+
+  {% endfor %}
+
+<!-------------------------------------------------------------DISLIKES-->
+<row>
+  <div class="red accent-4 grey-text text-lighten-4">
+     <h5>DISLIKES</h5>
+  </div>
+ </row>
+
+  {% for video in user_dislikes_videos %}
+<article data-id="{{video.youtube_id}}">
+
+  <div class="row">
+    <div class="col s12">
+      <div class="card">
+
+        <div class="card-content">
+          <div class="card-title">{{ video.title }}</div>
+        </div>
+
+        <div class="card-image">
+          <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'target="_blank">
+            <img src='{{ video.thumbnail_url }}' alt=''></a>
+        </div>
+        
+        <div class="card-content">
+          <p class='p-description truncate'>{{ video.description }}</p>
+        </div>
+        
+        <p class='p-channel-title' style='display:none;'>{{ video.channel_title }}</p>
+        <p class='p-cat-id' style='display:none;'>{{ video.category_id }}</p>
+        <p class='p-tags' style='display:none;'>{{ video.tags }}</p>
+      
+
+        <div class="card-action">
+          <div class="row">
+             <button class="btn-remove">remove</button>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+    
+</article>
+
+
+  {% endfor %}
+  </div>
+</div>
+
+
+</div>
 
 
   <script src="{% static 'scripts/csrf_helper.js' %}"></script>
-  <script src="{% static 'scripts/profile.js' %}" defer></script>
+  <script src="{% static 'scripts/profile.js' %}"></script>
 
 {% else %}
   
