@@ -1,0 +1,28 @@
+{% extends 'project_2/base.html' %}
+{% load staticfiles %}
+
+{% block chart %}
+<div class="append" url-endpoint='{% url "api-data" %}'></div>
+
+
+<div>
+  <h4>{{ user.userprofileinfo }},
+  <br>your profile has been analyzed by IBM supercomputer, Watson.
+  Check out your Charts!<h4>
+</div>
+
+<div class="card-panel center-align">
+
+<div class="card-panel center-align" id="chart_div" style="width: 900px; height: 120px;"></div>
+
+<div class="card-panel center-align" id="chart_div_emotion" style="width: 900px; height: 500px;"></div>
+<div class="card-panel center-align" id="series_chart_div_key" style="width: 900px; height: 500px;"></div>
+<div class="card-panel center-align" id="series_chart_div_entities" style="width: 900px; height: 500px;"></div>
+<div class="card-panel center-align" id="chart_div_entities" style="width: 900px; height: 500px;"></div>
+<div class="card-panel center-align" id="chart_div_key" style="width: 900px; height: 500px;"></div>
+
+</div>
+
+<script src="{% static 'scripts/chart.js' %}"></script>
+
+{% endblock chart %}
