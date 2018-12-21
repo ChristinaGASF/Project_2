@@ -10,7 +10,6 @@ $(window).resize(function() {
 });
 $(window).on('resizeEnd',function(){
 
-
     drawChartTwo(drawChartTwo);
     // // chart 3
     drawChartThree(drawChartThree);
