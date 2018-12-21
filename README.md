@@ -52,6 +52,11 @@ Create a profile on our Web Application. Like and dislike trending YouTube conte
 <img src=https://github.com/ChristinaGASF/project_2/blob/master/project_2_app/media/color_scheme.png>
 
 ## Clips of Code
+- Brandon's code clip of...
+- Clarence's code clip of...
+- Christina enjoyed typing this code for the image below:
+alt="Graphic of the aerial of a desktop. Shows laptop keyboard, tablet with graph on it, phone with YouTube icon on screen, corded over-ear headphones, and a piece of pepperoni pizza on a plate with a bite missing. Oh, and a pencil."
+<img src=https://github.com/ChristinaGASF/project_2/blob/master/project_2_app/media/web_accessibility_code.png>
 
 ## Link to Heroku hosted project
 
