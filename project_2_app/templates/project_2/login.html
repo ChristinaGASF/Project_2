@@ -1,9 +1,10 @@
 {% extends 'project_2/base.html' %}
 
 {% block login %}
+<script>$( document ).ready(function(){$(".button-collapse").sideNav();});</script>
   <div class="container">
     <div class="jumbotron">
-      <h1>Login here :</h1>
+      <h4>Sign In Here</h4>
         <form method="post" action="{% url 'user_login' %}">
           {% csrf_token %}
           {# A more "HTML" way of creating the login form #}

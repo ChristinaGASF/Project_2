@@ -6,7 +6,7 @@ function likes_dislike_post_ajax(parent,article_data_id,likes,csrfToken) {
     var dataToSend= {
         "like": likes,
         "youtube_id": article_data_id,
-        "title": parent.find('h3').html(),
+        "title": parent.find('.card-title').html(),
         "thumbnail_url": parent.find('img').attr('src'),
         "channel_title": parent.find('.p-channel-title').html(),
         "category_id": parent.find('.p-cat-id').html(),
@@ -26,19 +26,47 @@ function likes_dislike_post_ajax(parent,article_data_id,likes,csrfToken) {
 
 function video_template(target,video) {
     
-    target.append(`
-    <article data-id='${video.youtube_id}'>
-      <h3>${video.title}</h3>
-      <a href='https://www.youtube.com/watch?v=${video.youtube_id}'>
-        <img src='${video.thumbnail.url}' alt=''>
-      </a>
-      <p class='p-description'> ${video.description}</p>
-      <p class='p-tags'>${video.tags}</p>
-      <p class='p-channel-title'>${video.channel_title}</p>
-      <p class='p-cat-id' style='display:none;'>${video.category_id }</p>
-      <button class="btn-like">Like!</button>
-      <button class="btn-dislike">DisLike :( </button>
-    </article>`);
+    target.append(`<article data-id="${video.youtube_id}">
+
+    
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+  
+          <div class="card-content">
+            <div class="card-title">${ video.title }</div>
+          </div>
+  
+          <div class="card-image">
+            <a href='https://www.youtube.com/watch?v=${video.youtube_id}' target="_blank">
+              <img src='${ video.thumbnail.url }' alt=''></a>
+          </div>
+          
+          <div class="card-content">
+            <p class='p-description truncate'>${ video.description }</p>
+          </div>
+
+                  
+        <p class='p-channel-title' style='display:none;'>${ video.channel_title }</p>
+        <p class='p-cat-id' style='display:none;'>${ video.category_id }</p>
+        <p class='p-tags' style='display:none;'>${ video.tags }</p>
+          
+          <div class="card-action">
+            <div class="row">
+              <div class="col s6">
+                <button class="btn-dislike ui-btn waves-effect waves-light red accent-4 btn"><i class="material-icons left">thumb_down</i> DISLIKE</button>
+              </div>
+              <div class="col s6">
+                <button class="btn-like ui-btn waves-effect waves-light light-blue darken-1 btn"><i class="material-icons right">thumb_up</i> LIKE</button>
+              </div>
+          </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+      
+  </article>`);
 }
 
 
@@ -57,19 +85,29 @@ function renderVideoList(output,target) {
 $(document).ready( function() {
     
     const csrfToken = getFromCookie('csrftoken');
-    
+    console.log('here0');
     // like a video and save to DB
     $('#video_list').on('click', 'button.btn-like', function() {
-        var $parent= $(this).parent();
+        var $article= $(this);
+        while ($article.prop('tagName')!='ARTICLE') {
+            $article= $article.parent();
+        }
+        var $parent= $article;
         var $article_data_id= $parent.attr('data-id');
+
         //console.log('like=',$article_data_id);
         likes_dislike_post_ajax($parent,$article_data_id,"True",csrfToken);
     });
 
     // dislike a video and save to DB
     $('#video_list').on('click', 'button.btn-dislike', function() {
-        var $parent= $(this).parent();
+        var $article= $(this);
+        while ($article.prop('tagName')!='ARTICLE') {
+            $article= $article.parent();
+        }
+        var $parent= $article;
         var $article_data_id= $parent.attr('data-id');
+        
         //console.log('dislike=',$article_data_id);
         likes_dislike_post_ajax($parent,$article_data_id,"False",csrfToken);
     });

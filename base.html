@@ -1,42 +1,25 @@
 
 {% load staticfiles %}
 <html>
-<head>
+    <head>
         <title>Project 2</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-
-        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-        <link href="https://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.css" rel="stylesheet"/>
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css" rel="stylesheet"/>
-
         <script src="https://code.jquery.com/jquery-3.3.1.js"integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="crossorigin="anonymous"></script>
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-        
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-        
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
-        <script src="{% static 'scripts/chart_head.js' %}"></script>
         <script src="{% static 'scripts/app.js' %}" defer></script>
-
-</head>
+     </head>
 
 <body>
-    <script>$( document ).ready(function(){$(".button-collapse").sideNav();});</script>
     <div class="red accent-4 grey-text text-lighten-4"><h3> YourTube. Analyzed.</h3></div>
     <nav class= "cyan lighten-2">
       <div class="nav-wrapper cyan lighten-2">
         <a href="#!" class="brand-logo grey-text text-lighten-4"></a>
-        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="large material-icons">menu</i></a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
 
         {% if user.is_authenticated %}
         <ul class="right hide-on-med-and-down">
@@ -68,7 +51,6 @@
     </nav>
 
 <main>
-    
 
         {% block landing %}
         {% endblock %}
@@ -85,13 +67,29 @@
         {% block profile %}
         {% endblock %}
 
-        {% block chart %}
-        {% endblock %}
+        {% block headSentimentEmotion %}
+        {% endblock headSentimentEmotion%}
+
+        {% block headKeywords %}
+        {% endblock headKeywords%}
+
+        {% block headEntities %}
+        {% endblock headEntities %}
+        
+        {% block headEntitiesBar %}
+        {% endblock headEntitiesBar %}
 
 
 
+<!-----------------------THIS NEEDS TO BE THE LANDING/INDEX PAGE BLOCK ONCE PATH IS FIXED--------------------------------->
+<div class="card-panel black center-align">
+<img class="center" width="656" src="https://lh3.googleusercontent.com/j2SJC1grxLdL94kX7uB9WclD_nqX49oJs3K82Tok1MaPcx4TvB2m7xmw-Ub4dvFORwPSzruQBWePxtizfuY1r3j4GQvi1G9z=s688">
+</div>
+<div class="card-panel black center-align">
+<img class="center" width="480"  src="https://media.giphy.com/media/l3vR16pONsV8cKkWk/giphy.gif">
+</div>
 
-
+<!-----------------------THIS NEEDS TO BE THE LANDING/INDEX PAGE BLOCK ONCE PATH IS FIXED--------------------------------->
 </main>
 
     <footer class="page-footer cyan lighten-2">

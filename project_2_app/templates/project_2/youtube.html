@@ -2,6 +2,21 @@
 
 {% block content %}
 
+<<<<<<< HEAD
+{% for video in video_results %}
+  <article>
+    <h3>{{ video.youtube_id }}</h3>
+    <h2>{{ video.title }}</h2>
+    <p>{{ video.description }}</p>
+    <p>{{ video.thumbnail }}</p>
+    <h3>{{ video.channel_title }}</h3>
+    <h3>{{ video.category_id }}</h3>
+
+  </article>
+  {% endfor %}
+
+
+=======
   {% for video in video_results %}
     <article>
     <h3>{{ video.title }}</h3>
@@ -13,4 +28,5 @@
     </article>
   {% endfor %}
 
+>>>>>>> 11c75d75240ef9899c9ec8c272a5982bc0c26d05
 {% endblock %}
