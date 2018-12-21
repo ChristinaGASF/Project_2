@@ -2,39 +2,30 @@ $(document).ready(function(){
     console.log("chart.js up and running")
 });
 
-// Test Chart
+$(window).resize(function() {
+    if(this.resizeTO) clearTimeout(this.resizeTO);
+    this.resizeTO = setTimeout(function() {
+        $(this).trigger('resizeEnd');
+    }, 500);
+});
+$(window).on('resizeEnd',function(){
 
-function drawChartEight() {
-  var data = google.visualization.arrayToDataTable(categoriesRows);
 
-  tree = new google.visualization.TreeMap(document.getElementById('chart_div2'));
+    drawChartTwo(drawChartTwo);
+    // // chart 3
+    drawChartThree(drawChartThree);
+    // // chart 3.5
+    drawChartThreeFive(drawChartThreeFive);
+    // chart 4
+    drawChartFour(drawChartFour);
+    // // chart 5
+    drawChartFive(drawChartFive);
+    // // chart 6
+    drawChartSix(drawChartSix);
+    // // chart 7
+    drawChartSeven(drawChartSeven);
+    });
 
-  tree.draw(data, {
-    minColor: '#f00',
-    midColor: '#ddd',
-    maxColor: '#0d0',
-    headerHeight: 15,
-    fontColor: 'black',
-    showScale: true
-  });
-
-}
-// Chart One 
-function drawChartOne() {
-
-var data = google.visualization.arrayToDataTable(entitiesRows);
-
-var options = {
-    title: 'Correlation between life expectancy, fertility rate ' +
-    'and population of some world countries (2010)',
-    hAxis: {title: 'Life Expectancy'},
-    vAxis: {title: 'Fertility Rate'},
-    bubble: {textStyle: {fontSize: 11}}
-};
-
-var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
-chart.draw(data, options);
-}
 
 // Chart Two
 function drawChartTwo() {
@@ -72,7 +63,7 @@ function drawChartThree() {
 var data = google.visualization.arrayToDataTable(emotionRowsBar);
 
 var options = {
-    title : 'Emotional Analysis of Likes',
+    title : 'Emotional Analysis of Liked Videos',
     vAxis: {title: 'Percentage'},
     seriesType: 'bars',
     animation:{
@@ -85,15 +76,34 @@ var options = {
 var chart = new google.visualization.ComboChart(document.getElementById('chart_div_emotion'));
     chart.draw(data, options);
 }
+// chart ThreeFive
+function drawChartThreeFive() {
+
+    var data = google.visualization.arrayToDataTable(categoriesRows);
+    
+    var options = {
+        title : 'Main Categories of Liked Videos',
+        vAxis: {title: 'Confidence score for category classification'},
+        seriesType: 'bars',
+        animation:{
+            "startup": true,
+            duration: 6000,
+            easing: 'out',
+        },
+        };
+    
+    var chart = new google.visualization.ComboChart(document.getElementById('chart_div_emotion'));
+        chart.draw(data, options);
+    }
 // Chart Four
 function drawChartFour() {
 
 var data = google.visualization.arrayToDataTable(keywordsRows);
 
 var options = {
-    title: 'Keyword correlation Between Joy & Anger ',
-    hAxis: {title: 'Joy'},
-    vAxis: {title: 'Anger',
+    title: 'Keyword Correlation Between Joy & Anger ',
+    hAxis: {title: 'Likeliness to Convey: Joy'},
+    vAxis: {title: 'Likeliness to Convey: Anger',
     direction: -1
     },
     bubble: {textStyle: {fontSize: 11}},
@@ -114,9 +124,9 @@ function drawChartFive() {
 var data = google.visualization.arrayToDataTable(entitiesRows);
 
 var options = {
-    title: 'Entity correlation Between Joy & Sadness ',
-    hAxis: {title: 'Joy'},
-    vAxis: {title: 'Sadness',
+    title: 'Entity Correlation Between Joy & Sadness ',
+    hAxis: {title: 'Likeliness to Convey: Joy'},
+    vAxis: {title: 'Likeliness to Convey: Sadness',
             direction: -1
     },
     bubble: {textStyle: {fontSize: 11}},
@@ -137,9 +147,9 @@ function drawChartSix() {
 var data = google.visualization.arrayToDataTable(entitiesRowsBar);
 
 var options = {
-    title : 'Top 10 Most Relevant Entities by Emotion and Score',
-    vAxis: {title: 'Emotion Score'},
-    hAxis: {title: 'Entity/Keyword'},
+    title : 'Likeliness to Convey: Each Emotion',
+    vAxis: {title: 'Likeliness to Convey: Each Emotion'},
+    hAxis: {title: 'Entity'},
     seriesType: 'bars',
     series: {1: {type: 'line'}},
     animation:{
@@ -158,9 +168,9 @@ function drawChartSeven() {
 var data = google.visualization.arrayToDataTable(keywordsRowsBar);
 
 var options = {
-    title : 'Top 10 Most Relevant Entities by Emotion and Score',
-    vAxis: {title: 'Emotion Score'},
-    hAxis: {title: 'Entity/Keyword'},
+    title : 'Top Keywords by Emotion and Score',
+    vAxis: {title: 'Likeliness to Convey: Each Emotion'},
+    hAxis: {title: 'Keyword'},
     seriesType: 'bars',
     series: {3: {type: 'line'}},
     
@@ -182,9 +192,9 @@ var entitiesRowsBar = [['ID', 'Joy', 'Sadness', 'Fear', 'Anger', 'Disgust']]
 var keywordsRows = [['ID', 'Joy', 'Anger', 'Sadness', 'Anger', 'Fear', 'Disgust']]
 var keywordsRowsBar = [['ID', 'Joy', 'Anger', 'Sadness', 'Anger', 'Fear', 'Disgust']]
 var emotionRow = [['Label', 'Value']]
-var emotionRowsBar = [['ID','Joy', 'Anger', 'Sadness', 'Fear', 'Disgust', 'Sentiment']]
-var categoriesRows = [['ID', 'Categories', 'Confidence Score' ]]
-var categoriesRowsBar = [['ID', 'Categories', 'Confidence Score' ]]
+var emotionRowsBar = [['ID','Joy', 'Anger', 'Sadness', 'Fear', 'Disgust', 'Senitment']]
+var categoriesRows = [['Categories', 'Confidence Score' ]]
+var categoriesRowsBar = [['Categories', 'Confidence Score' ]]
 
 $.ajax({
     method: "GET",
@@ -195,7 +205,7 @@ $.ajax({
     // build arrays for chartOne, chartFive and chartSix
     for (var i=1; i<data.entities.length; i++){
     var entitiesRow = []
-
+    
     entitiesRow.push(data.entities[i].text)
     entitiesRow.push(data.entities[i].emotion.joy * p)
     entitiesRow.push(data.entities[i].emotion.sadness * p)
@@ -227,6 +237,7 @@ $.ajax({
     keywordsRows.push(keywordsRow)
     }
     // build array for chartTwo
+    emotionRow.push(['Sentiment',data.sentiment.document.score *p])
     emotionRow.push(['Joy',data.emotion.document.emotion.joy *p])
     emotionRow.push(['Anger',data.emotion.document.emotion.anger * p])
     emotionRow.push(['Sadness',data.emotion.document.emotion.sadness * p])
@@ -243,11 +254,10 @@ $.ajax({
     data.sentiment.document.score *p])
     
     // build arrays for chartEight and chartNine
-    for (let i=1; i<data.categories.length; i++){
+    for (let i=0; i<data.categories.length; i++){
     var categoriesRow = []
     
-    categoriesRow.push(data.categories[i].label)
-    categoriesRow.push(data.categories[i].score * p)
+    categoriesRow.push(data.categories[i].label,data.categories[i].score * p)
     if(i<10){
     categoriesRows.push(categoriesRow)
     categoriesRowsBar.push(categoriesRow)
@@ -266,11 +276,13 @@ $.ajax({
     console.log(categoriesRowsBar)
 
     // chart 1
-    google.charts.setOnLoadCallback(drawChartOne);
+    // google.charts.setOnLoadCallback(drawChartOne);
     // chart 2
     google.charts.setOnLoadCallback(drawChartTwo);
     // chart 3
     google.charts.setOnLoadCallback(drawChartThree);
+    // chart 3.5
+    google.charts.setOnLoadCallback(drawChartThreeFive);
     // chart 4
     google.charts.setOnLoadCallback(drawChartFour);
     // chart 5
@@ -280,10 +292,12 @@ $.ajax({
     // chart 7
     google.charts.setOnLoadCallback(drawChartSeven);
     // chart 8 test
-    google.charts.setOnLoadCallback(drawChartEight);
+    // google.charts.setOnLoadCallback(drawChartEight);
     },
     error: function(error_data){
         console.log("error")
         console.log(error_data)
-    }
+    },
+    
+
 });

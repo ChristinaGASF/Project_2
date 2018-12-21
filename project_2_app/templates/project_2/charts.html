@@ -3,16 +3,16 @@
 
 {% block chart %}
 <div class="append" url-endpoint='{% url "api-data" %}'>
-  <h1>Hello World </h1>
+  <h1>YouTube Liked Video Analysis</h1>
 </div>
-<div id="chart_div2" style="width: 900px; height: 120px;"></div>
-<div id="series_chart_div" style="width: 900px; height: 500px;"></div>
-<div id="chart_div" style="width: 900px; height: 120px;"></div>
-<div id="chart_div_emotion" style="width: 900px; height: 500px;"></div>
-<div id="series_chart_div_key" style="width: 900px; height: 500px;"></div>
-<div id="series_chart_div_entities" style="width: 900px; height: 500px;"></div>
-<div id="chart_div_entities" style="width: 900px; height: 500px;"></div>
-<div id="chart_div_key" style="width: 900px; height: 500px;"></div>
+<div class='row'>
+  <div class='chart' id="chart_div" style="width: 900px; height: 120px;"></div>
+  <div class='chart' id="chart_div_emotion" style="width: 900px; height: 500px;"></div>
+  <div class='chart' id="chart_div_key" style="width: 900px; height: 500px;"></div>
+  <div class='chart' id="series_chart_div_entities" style="width: 900px; height: 500px;"></div>
+  <div class='chart' id="chart_div_entities" style="width: 900px; height: 500px;"></div>
+  <div class='chart' id="series_chart_div_key" style="width: 900px; height: 500px;"></div>
+</div>
 <script src="{% static 'scripts/chart.js' %}"></script>
 {% endblock chart %}
 
