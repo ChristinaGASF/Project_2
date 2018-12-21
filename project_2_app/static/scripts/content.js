@@ -6,7 +6,7 @@ function likes_dislike_post_ajax(parent,article_data_id,likes,csrfToken) {
     var dataToSend= {
         "like": likes,
         "youtube_id": article_data_id,
-        "title": parent.find('h3').html(),
+        "title": parent.find('.card-title').html(),
         "thumbnail_url": parent.find('img').attr('src'),
         "channel_title": parent.find('.p-channel-title').html(),
         "category_id": parent.find('.p-cat-id').html(),
@@ -45,6 +45,11 @@ function video_template(target,video) {
           <div class="card-content">
             <p class='p-description truncate'>${ video.description }</p>
           </div>
+
+                  
+        <p class='p-channel-title' style='display:none;'>${ video.channel_title }</p>
+        <p class='p-cat-id' style='display:none;'>${ video.category_id }</p>
+        <p class='p-tags' style='display:none;'>${ video.tags }</p>
           
           <div class="card-action">
             <div class="row">
@@ -84,22 +89,25 @@ $(document).ready( function() {
     // like a video and save to DB
     $('#video_list').on('click', 'button.btn-like', function() {
         var $article= $(this);
-        console.log('here1');
         while ($article.prop('tagName')!='ARTICLE') {
             $article= $article.parent();
         }
         var $parent= $article;
         var $article_data_id= $parent.attr('data-id');
 
-        console.log('like=',$article_data_id);
-        return;
+        //console.log('like=',$article_data_id);
         likes_dislike_post_ajax($parent,$article_data_id,"True",csrfToken);
     });
 
     // dislike a video and save to DB
     $('#video_list').on('click', 'button.btn-dislike', function() {
-        var $parent= $(this).parent();
+        var $article= $(this);
+        while ($article.prop('tagName')!='ARTICLE') {
+            $article= $article.parent();
+        }
+        var $parent= $article;
         var $article_data_id= $parent.attr('data-id');
+        
         //console.log('dislike=',$article_data_id);
         likes_dislike_post_ajax($parent,$article_data_id,"False",csrfToken);
     });
