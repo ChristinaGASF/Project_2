@@ -20,11 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '2!ke3#&qut^%)a-$)if9a_rq)nltzq=*1ue)*z7(fe$)yp=*&8'
+SECRET_KEY = ''
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True and 1
 
+#ALLOWED_HOSTS = ['localhost']
 ALLOWED_HOSTS = []
 
 
@@ -126,5 +127,5 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [STATIC_DIR,]
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/media/'
-LOGIN_URL = '/project_2_app/user_login'
+LOGIN_URL = '/login/'
 

@@ -2,6 +2,7 @@ console.log('in-sanity check');
 
 var $initProfileVal;
 
+// helper function: instant update based on target and id
 function instantUpdateByID(field,target,oldTag,csrfToken) {
     // click on area to change
     $(target).on('click',`${oldTag}[id=${field}]`,function(){
@@ -16,23 +17,16 @@ function instantUpdateByID(field,target,oldTag,csrfToken) {
         $(this).replaceWith($(`<${oldTag} id='${field}'>${$text}</${oldTag}>`));
         if ($text.trim()==$initProfileVal.trim()) return;
         var dataObj={}; dataObj[field]= $text;
-        console.log(dataObj);
-        //return;
+        
         $.ajax({
             'type': 'PATCH',
             'url': '/user/profile_edit/',
             'data': JSON.stringify(dataObj),
             'contentType': 'application/json',
-            'beforeSend': function(xhr) {
-                xhr.setRequestHeader('X-CSRFToken', csrfToken);
-            },
-            'success': function(output){ 
+            'beforeSend': function(xhr) { xhr.setRequestHeader('X-CSRFToken', csrfToken); },
+            'success': function(output,textStatus, xhr){ 
+                console.log(xhr.status);
                 console.log('output:',output);
-                /*
-                var key= Object.getOwnPropertyNames(output)[0];
-                if (key=='username') { $('i[name=user]').html(output[key]); } 
-                $(`#${key}`).html(output[key]);
-                */
             },
             'error': function(err1,err2,err3) { console.log(err1,err2,err3); }
         });
@@ -42,11 +36,59 @@ function instantUpdateByID(field,target,oldTag,csrfToken) {
 
 $(document).ready( function() {
     
-    const csrfToken = getCookie('csrftoken');
+    const csrfToken = getFromCookie('csrftoken');
 
-    instantUpdateByID('email','p','span',csrfToken)
+    // hide update profile_pic form
+    $('.update_profile_pic_form').hide();
 
+    // instant update email 
+    instantUpdateByID('email','p','span',csrfToken);
+    
+    $('button[name=analysis]').on('click',function(){
+        window.location.href='';
+    });
 
+    // update profile_pic button toggle
+    $('button[name=edit_profile_pic]').on('click',function(){
+        $(this).hide();
+        $('.update_profile_pic_form').show();
+    });
+
+    // cancel update profile_pic form
+    $('button[name=cancel_update_profile_pic]').on('click',function(event){
+        event.preventDefault();
+        $('.update_profile_pic_form').hide();
+        $('button[name=edit_profile_pic]').show();
+    });
+
+    // save update profile_pic form
+    $('button[name=save_update_profile_pic]').on('click',function(event){
+        event.preventDefault();
+        var $profile_pic= $('#profile_pic').val();
+        if ($profile_pic=='') return;
+        var form_data = new FormData();
+        form_data.append('image', $('#profile_pic')[0].files[0]);
+        
+        $.ajax({
+            'method': 'POST',
+            'url': '/user/profile_edit/',
+            'data': form_data,
+            'processData': false,
+            'contentType': false,
+            'beforeSend': function(xhr) { xhr.setRequestHeader('X-CSRFToken', csrfToken); },
+            'success': function(json, textStatus, xhr) {
+                console.log(json);
+                if (xhr.status==200) {
+                    $('.update_profile_pic_form').hide();
+                    $('button[name=edit_profile_pic]').show();
+                }
+            },
+            'error': function(e1,e2,e3) { console.log('e1= ',e1,', e2= ',e2,', e3= ',e3); }
+        });
+        
+    });
+
+    // remove video from likes / dislikes list
     $('button.btn-remove').on('click', function() {
         var $parent= $(this).parent();
         var $article_data_id= $parent.attr('data-id');
@@ -59,16 +101,13 @@ $(document).ready( function() {
             "contentType": "application/json",
             "dataType": "json",
             "data": dataToSend,
-            "beforeSend": function(xhr) {
-                xhr.setRequestHeader('X-CSRFToken', csrfToken);
-            },
-            "success": function(json) {
+            "beforeSend": function(xhr) { xhr.setRequestHeader('X-CSRFToken', csrfToken); },
+            "success": function(json,textStatus, xhr) {
                 console.log(json);
-                if (json.message=="successfully deleted") {
+                if (xhr.status==200) {
                     //$(`article[data-id=${$article_data_id}]`).fadeOut();
                     $(`article[data-id=${$article_data_id}]`).remove();
                 }
-                
             }, 
             "error": function(e1,e2,e3) { console.log('e1= ',e1,', e2= ',e2,', e3= ',e3); }
     
