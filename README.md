@@ -6,6 +6,7 @@ Create a profile on our Web Application. Like and dislike trending YouTube conte
 ## Contributors:
 
 - Brandon Ford [https://github.com/dogtownoak] 
+
  
 - Clarence Cheung [https://github.com/kleranscoding] 
  
@@ -18,14 +19,13 @@ Create a profile on our Web Application. Like and dislike trending YouTube conte
 - PostgresSQL
 - JavaScript
 - jQuery
-- YouTube API (using Express, Ajax) DEMO:[Link](https://github.com/ChristinaGASF/project_2/tree/youtube_api_demo/youtube-api-node)
+- YouTube API (using Express, Ajax) Demo:[Link](https://github.com/ChristinaGASF/project_2/tree/youtube_api_demo/youtube-api-node)
 - Watson API
 - Google Charts
 
 ## Futher Exploration Goals
 - Charting
 - Material Design
-- CSS Animations
 - Accessibility
 
 ## Wireframes
@@ -53,6 +53,12 @@ Create a profile on our Web Application. Like and dislike trending YouTube conte
 <img src=https://github.com/ChristinaGASF/project_2/blob/master/project_2_app/media/color_scheme.png>
 
 ## Clips of Code
+- Brandon enjoyed code from the image below.
+<img src=https://github.com/ChristinaGASF/project_2/blob/master/wireframes/B%20Code.png>
+- Clarence's code clip of...
+- Christina enjoyed typing this code for the image below:
+##### alt="Graphic of the aerial of a desktop. Shows laptop keyboard, tablet with graph on it, phone with YouTube icon on screen, corded over-ear headphones, and a piece of pepperoni pizza on a plate with a bite missing. Oh, and a pencil."
+
 
 ## Link to Heroku hosted project
 
