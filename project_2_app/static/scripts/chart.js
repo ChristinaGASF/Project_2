@@ -206,7 +206,7 @@ $.ajax({
     if(i<10){
     keywordsRows.push(keywordsRow)
     keywordsRowsBar.push(keywordsRow)
-    }
+    } else
     keywordsRows.push(keywordsRow)
     }
     // build array for chartTwo
@@ -234,7 +234,7 @@ $.ajax({
     if(i<10){
     categoriesRows.push(categoriesRow)
     categoriesRowsBar.push(categoriesRow)
-    }
+    } else
     categoriesRows.push(categoriesRow)
     }
 
