@@ -43,7 +43,6 @@
 
 <article data-id="{{video.youtube_id}}">
 
-    
   <div class="row">
     <div class="col s12">
       <div class="card">
@@ -61,6 +60,10 @@
           <p class='p-description truncate'>{{ video.description }}</p>
         </div>
         
+        <p class='p-channel-title' style='display:none;'>{{ video.channel_title }}</p>
+        <p class='p-cat-id' style='display:none;'>{{ video.category_id }}</p>
+        <p class='p-tags' style='display:none;'>{{ video.tags }}</p>
+
         <div class="card-action">
           <div class="row">
             <div class="col s6">
