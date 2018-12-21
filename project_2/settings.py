@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,10 +23,10 @@ STATIC_DIR = os.path.join(BASE_DIR,'project_2_app/static')
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '2!ke3#&qut^%)a-$)if9a_rq)nltzq=*1ue)*z7(fe$)yp=*&8'
+SECRET_KEY = os.environ['DJANGO_SECRET']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False or 1
+DEBUG = False or 0
 
 ALLOWED_HOSTS = ['*'] 
 
@@ -44,7 +45,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    #'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -124,13 +125,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+STATIC_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 STATIC_URL = '/static/' 
-STATICFILES_DIRS = [STATIC_DIR,]
+#STATICFILES_DIRS = [STATIC_DIR,]
+
+STATICFILES_DIRS = [(os.path.join(BASE_DIR, 'static')),]
 
 MEDIA_DIR = os.path.join(BASE_DIR,'project_2_app/static/media')
 MEDIA_ROOT = MEDIA_DIR
 MEDIA_URL = '/static/media/'
 
 
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+django_heroku.settings(locals())
