@@ -1,9 +1,7 @@
 # Project 2 YourTube. Analyzed.
 
 ## Description: 
-Short paragraph (2-3 sentences) ["elevator pitch"] describing what your project does
-
-## Link to Heroku hosted project
+Create a profile on our Web Application. Like and dislike trending YouTube content. Have your profile analyzed by IBM supercomputer, Watson. See that data graphically displayed in Google Charts.
 
 ## Contributors:
 
@@ -18,13 +16,17 @@ Short paragraph (2-3 sentences) ["elevator pitch"] describing what your project 
 - Python
 - Django
 - PostgresSQL
-#### -YouTube API demo (using Express, Ajax) [Link](https://github.com/ChristinaGASF/project_2/tree/youtube_api_demo/youtube-api-node)
+- JavaScript
+- jQuery
+- YouTube API (using Express, Ajax) DEMO:[Link](https://github.com/ChristinaGASF/project_2/tree/youtube_api_demo/youtube-api-node)
 - Watson API
+- Google Charts
 
 ## Futher Exploration Goals
 - Charting
 - Material Design
 - CSS Animations
+- Accessibility
 
 ## Wireframes
 <img src=https://github.com/ChristinaGASF/project_2/blob/master/wireframes/signin_page.png>
@@ -44,11 +46,17 @@ Short paragraph (2-3 sentences) ["elevator pitch"] describing what your project 
 - (un)dislike videos from profile page
 - view analyzation of saved videos
 - user can update profile
-- sign out from content | profile page
+- sign out from content 
 
 ## Color Scheme
+- Inspired by Google + YouTube
 <img src=https://github.com/ChristinaGASF/project_2/blob/master/project_2_app/media/color_scheme.png>
 
 ## Clips of Code
 
+## Link to Heroku hosted project
+
 ## Wish List | Future Development
+- ability to search content
+- email users rendered chart
+- save sessions and render chart variation
