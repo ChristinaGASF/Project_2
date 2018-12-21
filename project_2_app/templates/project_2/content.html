@@ -1,56 +1,101 @@
 {% extends 'project_2/base.html' %}
 
-
-
 {% block content %}
 
 {% if user.is_authenticated %}
 
-  {% load staticfiles %}
+{% load staticfiles %}
 
-  <h1>Hi, {{ user.userprofileinfo }}</h1>
-  <h2>Trending YouTube Videos</h2>
+<div>
+<h4>Hello {{ user.userprofileinfo }},</h4>
+<h5>Here's today's Top Trending on YouTube content.</h5>
+</div>
   
-  <button class='show-search'>Search Option</button>
-  <div class='search_videos'>
-    <button type='button' class='btn-get-all'>
-      Get Trending Videos from all categories
-    </button>
-    Or
-    <select class="category">
-      {% for cat in categories %}
-        <option value='{{ cat.category_id }}'>{{ cat.title }}</option>
-      {% endfor %}
-    </select>
-    <button type='button' class='btn-get-selected'>
-      Get from this Category
-    </button>
-  </div>
-  
-  
-  <div id='video_list'>
-  {% for video in video_results %}
-    <article data-id="{{video.youtube_id}}">
-      <h3>{{ video.title }}</h3>
-      <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'>
-        <img src='{{ video.thumbnail.url }}' alt=''>
-      </a>
-      <p class='p-description'>{{ video.description }}</p>
-      <p class='p-tags'>{{ video.tags }}</p>
-      <p class='p-channel-title'>{{ video.channel_title }}</p>
-      <p class='p-cat-id' style='display:none;'>{{ video.category_id }}</p>
-      <button class="btn-like">Like!</button>
-      <button class="btn-dislike">DisLike :( </button>
-    </article>
-  {% endfor %}
+<!--BUTTONS-->
+
+<div class="row light-blue darken-1">
+
+  <div class="col s4 hoverable">
+      <button class="btn-get-all " type="submit" name="action"> 
+        All Categories
+      </button>
   </div>
 
-  <script src="{% static 'scripts/csrf_helper.js' %}"></script>
-  <script src="{% static 'scripts/content.js' %}" defer></script>
+  <div class="col s4 hoverable">
+      <select class= "category">
+        {% for cat in categories %}
+          <option value='{{ cat.category_id }}'>{{ cat.title }}</option>
+        {% endfor %}
+      </select>
+  </div>
+
+  <div class="col s4 hoverable">
+      <button type="button" class="btn-get-selected ">From this Category</button>
+  </div>
+
+</div>
+
+
+<!--VIDEO CARD-->
+
+<div id="video_list">
+{% for video in video_results %}
+
+<article data-id="{{video.youtube_id}}">
+
+  <div class="row">
+    <div class="col s12">
+      <div class="card">
+
+        <div class="card-content">
+          <div class="card-title">{{ video.title }}</div>
+        </div>
+
+        <div class="card-image">
+          <a href='https://www.youtube.com/watch?v={{video.youtube_id}}'target="_blank">
+            <img src='{{ video.thumbnail.url }}' alt=''></a>
+        </div>
+        
+        <div class="card-content">
+          <p class='p-description truncate'>{{ video.description }}</p>
+        </div>
+        
+        <p class='p-channel-title' style='display:none;'>{{ video.channel_title }}</p>
+        <p class='p-cat-id' style='display:none;'>{{ video.category_id }}</p>
+        <p class='p-tags' style='display:none;'>{{ video.tags }}</p>
+
+        <div class="card-action">
+          <div class="row">
+            <div class="col s6">
+              <button  class="btn-dislike waves-effect waves-light red accent-4 btn i-btn"><i class="material-icons left">thumb_down</i> DISLIKE</button>
+            </div>
+            <div class="col s6">
+              <button  class="btn-like waves-effect waves-light light-blue darken-1 btn i-btn"><i class="material-icons right">thumb_up</i> LIKE</button>
+            </div>
+        </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+    
+</article>
+
+{% endfor %}
+
+</div>
+
+
+<script src="{% static 'scripts/csrf_helper.js' %}"></script>
+<script src="{% static 'scripts/content.js' %}" defer></script>
+
+<script>$( document ).ready(function(){ $(".button-collapse").sideNav(); }); </script>
 
 {% else %}
-  <h1> 403 Forbidden </h1>
-  <h2> You need to Sign In </h2>
+
+<h1>403 Forbidden</h1>
+<h2>You need to Sign In</h2>
+
 {% endif %}
 
 {% endblock %}

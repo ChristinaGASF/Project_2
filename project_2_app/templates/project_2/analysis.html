@@ -5,23 +5,50 @@
 {% if user.is_authenticated %}
 
   {% load staticfiles %}
+
+  {% if not watson_response %}
+  <script> window.location.href='/profile/'; </script>
+  {% else %}
+
   <h2>ANALYSIS</h2>
 
-  <textarea style="resize:none;height:20vh;width:50vw;" disabled>
+  <textarea style="display:none;" disabled>
   {{ watson_response }}
   </textarea>
 
-  <div id="chart_div" style="width: 900px; height: 120px;"></div>
-  <div id="chart_div_emotion" style="width: 900px; height: 500px;"></div>
-  <div id="series_chart_div_key" style="width: 900px; height: 500px;"></div>
-  <div id="series_chart_div_entities" style="width: 900px; height: 500px;"></div>
-  <div id="chart_div_entities" style="width: 900px; height: 500px;"></div>
-  <div id="chart_div_key" style="width: 900px; height: 500px;"></div>
+  <div>
+    <h4>{{ user.userprofileinfo }},
+    <br>your profile has been analyzed by IBM supercomputer, Watson.
+    Check out your Charts!<h4>
+  </div>
+  
+  <div class="card-panel center-align">
+  
+  <div class="row">
+  
+    <div class="chartDial card-panel center-align" id="chart_div"></div>
+  
+    <div class="chart card-panel center-align" id="chart_div_emotion"></div>
+    <div class="chart card-panel center-align" id="chart_div_key"></div>
+    <div class="chart card-panel center-align" id="series_chart_div_entities"></div>
+    <div class="chart card-panel center-align" id="chart_div_entities"></div>
+    <div class="chart card-panel center-align" id="series_chart_div_key"></div>
+    
+  </div>
+  
+  </div>
+  
   <script src="{% static 'scripts/chart.js' %}"></script>
+  <script>$( document ).ready(function(){ $(".button-collapse").sideNav(); }); </script>
+
+  {% endif %}
+
 
 {% else %}
   <h1> 403 Forbidden </h1>
   <h2> You need to Sign In </h2>
 {% endif %}
+
+
 
 {% endblock %}

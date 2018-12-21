@@ -1,4 +1,4 @@
-console.log('in-sanity check');
+console.log('in-sanity check123');
 
 var $initProfileVal;
 
@@ -33,7 +33,7 @@ function instantUpdateByID(field,target,oldTag,csrfToken) {
             'beforeSend': function(xhr) { xhr.setRequestHeader('X-CSRFToken', csrfToken); },
             'success': function(output,textStatus, xhr){ 
                 console.log(xhr.status);
-                if (xhr.status==200) alert('email saved');
+                //if (xhr.status==200) alert('email saved');
                 console.log('output:',output);
             },
             'error': function(err1,err2,err3) { console.log(err1,err2,err3); }
@@ -50,7 +50,11 @@ $(document).ready( function() {
     $('.update_profile_pic_form').hide();
 
     // instant update email 
-    instantUpdateByID('email','p','span',csrfToken);
+    instantUpdateByID('email','h6','span',csrfToken);
+    
+    $('button[name=analysis]').on('click',function(){
+        window.location.href='/analysis/';
+    });
 
     // update profile_pic button toggle
     $('button[name=edit_profile_pic]').on('click',function(){
@@ -98,7 +102,13 @@ $(document).ready( function() {
 
     // remove video from likes / dislikes list
     $('button.btn-remove').on('click', function() {
-        var $parent= $(this).parent();
+        console.log('adgusdhgka');
+        var $article= $(this);
+        while ($article.prop('tagName')!='ARTICLE') {
+            console.log($article);
+            $article= $article.parent();
+        }
+        var $parent= $article;
         var $article_data_id= $parent.attr('data-id');
         console.log('remove=',$article_data_id);
         
@@ -113,7 +123,6 @@ $(document).ready( function() {
             "success": function(json,textStatus, xhr) {
                 console.log(json);
                 if (xhr.status==200) {
-                    //$(`article[data-id=${$article_data_id}]`).fadeOut();
                     $(`article[data-id=${$article_data_id}]`).remove();
                 }
             }, 

@@ -1,32 +1,69 @@
 
 {% load staticfiles %}
 <html>
-    <head>
+<head>
+        <title>Project 2</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Project 2</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        
+        <link href="https://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.css" rel="stylesheet"/>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css" rel="stylesheet"/>
+
         <link rel="stylesheet" href="{% static 'css/main.css' %}">
-        <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
+        
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script src="{% static 'scripts/chart_header.js' %}"></script>
-        <script src="{% static 'scripts/app.js' %}" defer></script>
-    </head>
-    
-    <body>
-        <h1>Working Title Base HTML</h1>
-        {% if user.is_authenticated %}
-          <a href="{% url 'profile' %}">Profile</a> | 
-          <a href="{% url 'content' %}">Content</a> | 
-          <a href="{% url 'about' %}">About</a> | 
-          <a href="{% url 'logout' %}">Logout</a>
-        {% else %}
-          <a href="{% url 'about' %}">About</a> | 
-          <a href="{% url 'user_login' %}">Sign In</a> | 
-          <a href="{% url 'register' %}">Sign Up</a>
-        {% endif %}
 
+</head>
+
+<body>
+    
+    <div class="red accent-4 grey-text text-lighten-4"><h3> YourTube. Analyzed.</h3></div>
+    <nav class= "cyan lighten-2">
+      <div class="nav-wrapper cyan lighten-2">
+        <a href="#!" class="brand-logo grey-text text-lighten-4"></a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="large material-icons">menu</i></a>
+
+        {% if user.is_authenticated %}
+        <ul class="right hide-on-med-and-down">
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'content' %}">Content</a></li>
+          <li><a href="{% url 'profile' %}">Profile</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+          </ul>
+        <ul class="side-nav" id="mobile-demo">
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'content' %}">Content</a></li>
+          <li><a href="{% url 'profile' %}">Profile</a></li>
+          <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+
+        {% else %}
+        <ul class="right hide-on-med-and-down">
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'user_login' %}">Sign In</a> </li>
+          <li><a href="{% url 'register' %}">Sign Up</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo">
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'about' %}">About</a></li>
+          <li><a href="{% url 'user_login' %}">Sign In</a> </li> 
+          <li><a href="{% url 'register' %}">Sign Up</a></li>
+        </ul>
+        {% endif %}
+      </div>
+    </nav>
+
+    <main>
+    
         {% block landing %}
         {% endblock %}
 
@@ -44,11 +81,10 @@
 
         {% block analysis %}
         {% endblock %}
+
+    </main>
         
-        {% block chart %}
-        {% endblock %}
+    <script>$( document ).ready(function(){ $(".button-collapse").sideNav(); }); </script>
         
-    </body>
-<footer>
-</footer>
+  </body>
 </html>

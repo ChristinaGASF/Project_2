@@ -3,6 +3,7 @@
 {% load staticfiles %}
 
 {% block register %}
+<script>$( document ).ready(function(){$(".button-collapse").sideNav();});</script>
   <div class="container">
     <div class="jumbotron">
       {% if registered %}
@@ -11,21 +12,22 @@
 
       {% else %}
 
+      <h4>Sign Up Here</h4>
+        <h5>Fill out the form below:</h5>
+        <form enctype="multipart/form-data" method="POST">
+          {% csrf_token %}
+          {{ user_form.as_p }}
+          {{ profile_form.as_p }}
+          <input type="submit" name="" value="Register">
+        </form>
         {% if user.is_authenticated %}
           <script>window.location.href='/content';</script>
-        {% else %}
-          <h1>Register Here</h1>
-          <h3>Just fill out the form.</h3>
-          <form enctype="multipart/form-data" method="POST">
-            {% csrf_token %}
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-            <input type="submit" name="" value="Register">
-          </form>
+
         {% endif %}
 
       {% endif %}
 
     </div>
   </div>
+  <script>$( document ).ready(function(){ $(".button-collapse").sideNav(); }); </script>
 {% endblock %}

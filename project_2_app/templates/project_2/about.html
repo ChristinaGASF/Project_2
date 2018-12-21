@@ -1,16 +1,66 @@
 {% extends 'project_2/base.html' %}
+
 {% block content %}
-<h2>About Project 2</h2>
-<p>Sign in or Sign up. View the most popular trending YouTube videos. See a visualization of the content you like.</p>
-<h4>About the Contributors</h4>
-<div> 
-    <a href="https://github.com/dogtownoak" target="_blank">Brandon Ford</a>
+
+<h5 class="center-align">About this Web Application</h5>
+<h6 class="center-align">It uses a lot of technology which makes it pretty great.</h6>
+
+<div class="row">
+      <div class="card-panel center-align">
+      <img class="responsive-img" src="https://lh3.googleusercontent.com/MZEUgu8pLMOW6g9W4OJ5vX3svnY3whAzOgzyGz21DKK-NCWiakhjaFsHilFMKv-48x2CzK3etepT-t3YiqskVbO4w9XMwnEk2G5F=s0" alt="Graphic of the ariel of a desktop. Shows laptop keyboard, tablet with graph on it, phone with YouTube icon on screen, corded over-ear headphones, and a piece of pepperoni pizza on a plate with a bite missing. Oh, and a pencil. " >
+      </div>
 </div>
-<div>
-    <a href="https://github.com/kleranscoding" target="_blank">Clarence Cheung</a>
+
+
+<h5 class="center-align">About the Contributors</h5>
+<h6 class="center-align">A small group of awesome General Assembly students in San Francisco.</h6>
+
+<div class="row">
+  
+  <div class="card col s4">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator circle responsive-img" src="https://cdn.onlinewebfonts.com/svg/img_177992.png" alt="Photograph of Brandon Ford">
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">Brandon Ford<i class="material-icons right">more_vert</i></span>
+      <p class="center-align"><a href="https://github.com/dogtownoak" target="_blank">GitHub</a></p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title light-blue darken-1">Brandon Ford<i class="material-icons right">close</i></span>
+      <p>Brandon wants you to know he loves long Bart rides. </p>
+    </div>
+  </div>
+
+  <div class="card col s4">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator circle responsive-img" src="https://cdn.onlinewebfonts.com/svg/img_177992.png" alt="Photograph of Clarence Cheung">
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">Clarence Cheung<i class="material-icons right">more_vert</i></span>
+      <p class="center-align"><a href="https://github.com/kleranscoding"  target="_blank">GitHub</a></p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title light-blue darken-1">Clarence Cheung<i class="material-icons right">close</i></span>
+      <p>All you need to know about Clarence is he loves coding. He just loves coding! Well... and sometimes he doesn't like coding anymore.</p>
+    </div>
+  </div>
+
+  <div class="card col s4">
+    <div class="card-image waves-effect waves-block waves-light">
+      <img class="activator circle responsive-img" src="https://cdn.onlinewebfonts.com/svg/img_177992.png" alt="Photograph of Christina Hughes">
+    </div>
+    <div class="card-content">
+      <span class="card-title activator grey-text text-darken-4">Christina Hughes<i class="material-icons right">more_vert</i></span>
+      <p class="center-align"><a href="https://github.com/ChristinaGASF" target="_blank">GitHub</a></p>
+    </div>
+    <div class="card-reveal">
+      <span class="card-title light-blue darken-1">Christina Hughes<i class="material-icons right">close</i></span>
+      <p>This is supposed to be a brief bio. It will have 2-3 lines about me.</p>
+    </div>
+  </div>
+
 </div>
-<div>
-    <a href="https://github.com/ChristinaGASF" target="_blank">Christina Hughes</a>
-</div>
+
+<script>$( document ).ready(function(){ $(".button-collapse").sideNav(); }); </script>
 
 {% endblock %}
