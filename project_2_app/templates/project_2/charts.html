@@ -1,0 +1,22 @@
+{% extends 'project_2/base.html' %}
+{% load staticfiles %}
+
+{% block chart %}
+<script src="{% static 'scripts/chart.js' %}"></script>
+<div class="append" url-endpoint='{% url "api-data" %}'>
+  <h1>Hello World </h1>
+</div>
+<div id="series_chart_div" style="width: 900px; height: 500px;"></div>
+<div id="chart_div" style="width: 900px; height: 120px;"></div>
+<div id="chart_div_emotion" style="width: 900px; height: 500px;"></div>
+
+<div id="series_chart_div_key" style="width: 900px; height: 500px;"></div>
+<div id="series_chart_div_entities" style="width: 900px; height: 500px;"></div>
+<div id="chart_div_entities" style="width: 900px; height: 500px;"></div>
+<div id="chart_div_key" style="width: 900px; height: 500px;"></div>
+{% endblock chart %}
+
+
+
+
+

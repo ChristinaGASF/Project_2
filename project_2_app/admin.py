@@ -6,4 +6,3 @@ admin.site.register(UserProfileInfo)
 admin.site.register(Category)
 admin.site.register(Video)
 admin.site.register(Likes)
-

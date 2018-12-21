@@ -5,10 +5,11 @@ import datetime
 # Create your models here.
 
 class UserProfileInfo(models.Model):
-    name = models.OneToOneField(User,on_delete=models.CASCADE,related_name="user_name")
+    name = models.OneToOneField(User,on_delete=models.CASCADE)
     profile_pic = models.ImageField(upload_to='profile_pics',blank=True)
 
     def __str__(self): return self.name.username
+
 
 
 class Category(models.Model):
@@ -26,17 +27,16 @@ class Video(models.Model):
     description = models.TextField()
     tags = models.TextField()
     thumbnail_url = models.CharField(max_length=100)
-    thumbnail_width = models.CharField(max_length=4)
-    thumbnail_height = models.CharField(max_length=4)
+    thumbnail_width = models.CharField(max_length=4,default='')
+    thumbnail_height = models.CharField(max_length=4,default='')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='category')
   
     def __str__(self): return self.title
 
 
 
-
 class Likes(models.Model):
-    user_id = models.ForeignKey(User,on_delete=models.CASCADE,related_name='users')
+    user_id = models.ForeignKey(UserProfileInfo,on_delete=models.CASCADE,related_name='users')
     video_id = models.ForeignKey(Video,on_delete=models.CASCADE,related_name='videos')
     date = models.DateField(default=datetime.date.today)
     like = models.BooleanField(default=False)
