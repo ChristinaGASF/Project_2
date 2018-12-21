@@ -38,7 +38,7 @@ function video_template(target,video) {
           </div>
   
           <div class="card-image">
-            <a href='https://www.youtube.com/watch?v=${video.youtube_id}'>
+            <a href='https://www.youtube.com/watch?v=${video.youtube_id}' target="_blank">
               <img src='${ video.thumbnail.url }' alt=''></a>
           </div>
           
