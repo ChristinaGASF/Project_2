@@ -18,14 +18,13 @@ Create a profile on our Web Application. Like and dislike trending YouTube conte
 - PostgresSQL
 - JavaScript
 - jQuery
-- YouTube API (using Express, Ajax) DEMO:[Link](https://github.com/ChristinaGASF/project_2/tree/youtube_api_demo/youtube-api-node)
+- YouTube API (using Express, Ajax) Demo:[Link](https://github.com/ChristinaGASF/project_2/tree/youtube_api_demo/youtube-api-node)
 - Watson API
 - Google Charts
 
 ## Futher Exploration Goals
 - Charting
 - Material Design
-- CSS Animations
 - Accessibility
 
 ## Wireframes
