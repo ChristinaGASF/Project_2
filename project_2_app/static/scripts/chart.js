@@ -2,6 +2,23 @@ $(document).ready(function(){
     console.log("chart.js up and running")
 });
 
+// Test Chart
+
+function drawChartEight() {
+  var data = google.visualization.arrayToDataTable(categoriesRows);
+
+  tree = new google.visualization.TreeMap(document.getElementById('chart_div2'));
+
+  tree.draw(data, {
+    minColor: '#f00',
+    midColor: '#ddd',
+    maxColor: '#0d0',
+    headerHeight: 15,
+    fontColor: 'black',
+    showScale: true
+  });
+
+}
 // Chart One 
 function drawChartOne() {
 
@@ -262,6 +279,8 @@ $.ajax({
     google.charts.setOnLoadCallback(drawChartSix);
     // chart 7
     google.charts.setOnLoadCallback(drawChartSeven);
+    // chart 8 test
+    google.charts.setOnLoadCallback(drawChartEight);
     },
     error: function(error_data){
         console.log("error")
