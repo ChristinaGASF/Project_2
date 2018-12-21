@@ -5,3 +5,4 @@ $(document).ready(function(){
 
 google.charts.load('current', {'packages': ['corechart']});
 google.charts.load('current', {'packages':['gauge']});
+google.charts.load('current', {'packages':['treemap']});
