@@ -262,7 +262,7 @@ def get_data(request,   ):
 
     naturalLanguageUnderstanding = NaturalLanguageUnderstandingV1(
     version='2018-11-16',
-    iam_apikey='hB8gmTcFeu7MNsKDbRhW8_AYWntJn0sTcEV8A6SGJA7c',
+    iam_apikey='',
     url='https://gateway.watsonplatform.net/natural-language-understanding/api')
 
     response = naturalLanguageUnderstanding.analyze(

@@ -1,9 +1,13 @@
-/* .chart {
-    width: 100%;
+.chart {
     min-height: 500px;
+} 
+
+.chartDial {
+    min-height: 120px;
+    
 }
 
-.row {
+/* .row {
     margin: 0 !important;
     width: 100vh;
     height: auto;
