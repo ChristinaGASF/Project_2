@@ -55,7 +55,7 @@ Create a profile on our Web Application. Like and dislike trending YouTube conte
 - Brandon's code clip of...
 - Clarence's code clip of...
 - Christina enjoyed typing this code for the image below:
-### alt="Graphic of the aerial of a desktop. Shows laptop keyboard, tablet with graph on it, phone with YouTube icon on screen, corded over-ear headphones, and a piece of pepperoni pizza on a plate with a bite missing. Oh, and a pencil."
+##### alt="Graphic of the aerial of a desktop. Shows laptop keyboard, tablet with graph on it, phone with YouTube icon on screen, corded over-ear headphones, and a piece of pepperoni pizza on a plate with a bite missing. Oh, and a pencil."
 
 
 ## Link to Heroku hosted project
