@@ -2,18 +2,25 @@ console.log('in-sanity check');
 
 var $initProfileVal;
 
+
+function validEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+
+
 // helper function: instant update based on target and id
 function instantUpdateByID(field,target,oldTag,csrfToken) {
     // click on area to change
     $(target).on('click',`${oldTag}[id=${field}]`,function(){
         $initProfileVal= $(this).html();
-        $(this).replaceWith($(`<input id='${field}' value='${$(this).html()}' required>`));
+        $(this).replaceWith($(`<input id='${field}' value='${$(this).html()}'  required>`));
         $(`${target} input[id=${field}]`).focus();
     });
 
     $(target).on('blur',`input[id=${field}]`,function(){
         var $text= $(this).val();
-        if ($text=='') return;
+        if (!validEmail($text)) return;
         $(this).replaceWith($(`<${oldTag} id='${field}'>${$text}</${oldTag}>`));
         if ($text.trim()==$initProfileVal.trim()) return;
         var dataObj={}; dataObj[field]= $text;
@@ -26,6 +33,7 @@ function instantUpdateByID(field,target,oldTag,csrfToken) {
             'beforeSend': function(xhr) { xhr.setRequestHeader('X-CSRFToken', csrfToken); },
             'success': function(output,textStatus, xhr){ 
                 console.log(xhr.status);
+                if (xhr.status==200) alert('email saved');
                 console.log('output:',output);
             },
             'error': function(err1,err2,err3) { console.log(err1,err2,err3); }

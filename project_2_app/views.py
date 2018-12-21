@@ -11,10 +11,9 @@ from watson_developer_cloud import NaturalLanguageUnderstandingV1
 from watson_developer_cloud.natural_language_understanding_v1 import Features, EntitiesOptions, KeywordsOptions, EmotionOptions, SentimentOptions, CategoriesOptions, ConceptsOptions
 import requests, json, os, re
 
-
+max_num_youtube_videos = 100
 key= os.environ['GOOGLAPI']
 
-max_num_youtube_videos = 100
 
 ## helper functions
 
@@ -35,12 +34,10 @@ def get_youtube_video_helper(video_list,next_page_token,max_limit,cat_id):
         base_url+= '&pageToken='+next_page_token
     
     res = requests.get(base_url)
-    print('res= ',res.status_code)
     if res.status_code!=200: return
     
     json_res= res.json()
     next_page_token= json_res.get('nextPageToken') if json_res.get('nextPageToken') else ''
-    print ('next_page_token= ',next_page_token)
     videos= json_res.get('items')
     video_list.extend(videos)
     if next_page_token=='': return 
@@ -52,8 +49,7 @@ def get_youtube_video_helper(video_list,next_page_token,max_limit,cat_id):
 def get_video_list(max_limit,cat_id):
     video_list= []
     get_youtube_video_helper(video_list,'',max_limit,cat_id)    
-    print(len(video_list))
-
+    
     video_results= []
     for video in video_list:
         yid= video.get('id')
@@ -64,7 +60,6 @@ def get_video_list(max_limit,cat_id):
         channel_title= snippet.get('channelTitle')
         tags= ', '.join(snippet.get('tags')) if snippet.get('tags') else ''
         cat_id= snippet.get('categoryId')
-        #print(yid,'\n',title,'\n',descrp,'\n',thumbnail,'\n',channel_title,'\n',tags,'\n',cat_id)
         video_results.append({'youtube_id': yid, 'title': title,'description': descrp,'thumbnail': thumbnail,'channel_title': channel_title,'tags': tags,'category_id': cat_id})    
     return video_results
 
@@ -111,9 +106,7 @@ def register(request):
             else:
                 profile.profile_pic = 'profile_pics/user_default.png'
             profile.save()
-            #print('profile: ',profile)
             registered = True
-            #print('NEWUSER: ',new_user)
             login(request,new_user)
             return redirect('content')
         else:
@@ -136,7 +129,7 @@ def user_login(request):
             else:
                 return HttpResponse("Your account was inactive.")
         else:
-            print(f"Someone tried to login and failed...\nattempted: username: {username} and password: {'#' * len(password)}")
+            #print(f"Someone tried to login and failed...\nattempted: username: {username} and password: {'#' * len(password)}")
             return render(request, 'project_2/login.html', {})
     else:
         return render(request, 'project_2/login.html', {})
@@ -170,11 +163,9 @@ def profile_page(request):
     dislikes_list= Likes.objects.filter(user_id=user_id,like=False)
     append_likes_dislikes_videos_list(likes_list,user_likes_videos)
     append_likes_dislikes_videos_list(dislikes_list,user_dislikes_videos)
-    #print('host:',request.get_host())
     return render(request, 'project_2/profile.html',{
         'user_likes_videos':user_likes_videos,
         'user_dislikes_videos':user_dislikes_videos,
-        #'base_url': request.get_host()
     })
 
 
@@ -185,27 +176,29 @@ def analysis(request):
     user = request.user.userprofileinfo
     with connection.cursor() as cursor:
         cursor.execute("""
-        SELECT v.channel_title,v.title,v.tags
+        SELECT v.channel_title,v.title,v.tags, v.description
         FROM project_2_app_video v
         WHERE v.id IN
             (SELECT video_id_id FROM project_2_app_likes WHERE user_id_id=%s);
         """,[str(user.id)])
         records= cursor.fetchall()
-        print(len(records))
+        #print(len(records))
         
         for row in records:
             row= list(row)
             watson_text+= ' '.join(row)
 
         pattern = re.compile(r'\s+')
-        #watson_text.replace('\\s',' ')
-        watson_text = watson_text.replace('https://',' ').replace('http://',' ').replace(':',' ').replace('/',' ').replace('&amp;',' ')
+        replace_words = ['https://','http://',':','/','&amp;','www.','.com']
+        for r in replace_words: 
+            watson_text = watson_text.replace(r,' ')
+        #watson_text = watson_text.replace('https://',' ').replace('http://',' ').replace(':',' ').replace('/',' ').replace('&amp;',' ')
         watson_text = re.sub(pattern, ' ',watson_text)
         watson_response = watson_nlp_analysis(watson_text)
-        print(len(watson_text))
+        result = json.dumps(watson_response,indent=2) if watson_response!='' else ''
 
     return render(request,'project_2/analysis.html',
-        {'watson_text':watson_text,'watson_response':json.dumps(watson_response,indent=2)})
+        {'watson_text':watson_text,'watson_response':result})
 
 
 
@@ -254,13 +247,11 @@ def videos_selected_category(request):
         return HttpResponseBadRequest(json.dumps({"message": "bad request method"}),content_type="application/json")
 
 
-
 ## remove likes / dislikes
 @login_required
 def remove_like_dislike(request):
     if request.method == 'DELETE':
         user_profile_id = request.user.userprofileinfo.id
-        #user_profile_id = 36
         youtube_id = QueryDict(request.body).get('youtube_id')
         
         with connection.cursor() as cursor:
@@ -287,6 +278,7 @@ def add_like_dislike(request):
         user_profile = request.user.userprofileinfo
         data = request.POST
         yid = data.get("youtube_id")
+        
         try:
             has_video = Video.objects.get(youtube_id=yid)
             this_video = has_video
@@ -305,7 +297,6 @@ def add_like_dislike(request):
 
         try:
             has_likes= Likes.objects.get(user_id=user_profile.id,video_id=this_video.id)
-            #lid= has_likes.id
             message= "duplicated"
         except ObjectDoesNotExist:
 
@@ -316,8 +307,6 @@ def add_like_dislike(request):
                )
             l.save()
             message= "saved"
-            #lid=l.id
-        
         return HttpResponse(json.dumps({"message": message}),content_type="application/json")
     else:
         return HttpResponseBadRequest(json.dumps({"message": "bad request method"}),content_type="application/json")
@@ -330,13 +319,11 @@ def watson_nlp_analysis(text):
     max_limit_one= 10
     max_limit_two= 30
 
-    #print('here')
     naturalLanguageUnderstanding = NaturalLanguageUnderstandingV1(
         version = '2018-11-16',
-        iam_apikey = '9FrFowV5uL29TSY4RItM6rKy5yAPLKL3vRb5pE__VdM0',
+        iam_apikey = os.environ['WATSON'],
         url = 'https://gateway.watsonplatform.net/natural-language-understanding/api')
 
-    #print('nlp')
     response = naturalLanguageUnderstanding.analyze(
         text= text,
         features=Features(
@@ -347,12 +334,9 @@ def watson_nlp_analysis(text):
             entities=EntitiesOptions(emotion=True, sentiment=True, limit=max_limit_two),
             keywords=KeywordsOptions(emotion=True, sentiment=True, limit=max_limit_two))
         ).get_result()
-    
-    #print('response')
-    print(json.dumps(response, indent=2))
     return response
 
-
+'''
 def get_data(request):
     # response = watsonResponse
     # return JsonResponse(response)
@@ -376,5 +360,5 @@ def get_data(request):
     print(json.dumps(response, indent=2))
     return JsonResponse(response)
 
-
 def charts(request): return render(request, 'project_2/charts.html',{})
+#'''

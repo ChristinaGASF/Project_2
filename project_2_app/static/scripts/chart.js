@@ -136,30 +136,33 @@ var emotionRowsBar = [['ID','Joy', 'Anger', 'Sadness', 'Fear', 'Disgust', 'Senti
 var categoriesRows = [['ID', 'Categories', 'Confidence Score' ]];
 var categoriesRowsBar = [['ID', 'Categories', 'Confidence Score' ]];
 
-var data= $('textarea').html();
+var data= $('textarea').html().trim();
 
 if (data!='') {
 
     data= JSON.parse(data);
     //*
     // build arrays for chartOne, chartFive and chartSix
-    for (var i=1; i<data.entities.length; i++){
-        var entitiesRow = [];
-
-        entitiesRow.push(data.entities[i].text);
-        entitiesRow.push(data.entities[i].emotion.joy * p);
-        entitiesRow.push(data.entities[i].emotion.sadness * p);
-        entitiesRow.push(data.entities[i].emotion.fear * p);
-        entitiesRow.push(data.entities[i].emotion.anger * p);
-        entitiesRow.push(data.entities[i].emotion.disgust * p);
-        
-        if(i<10){
-            entitiesRows.push(entitiesRow);
-            entitiesRowsBar.push(entitiesRow);
-        } else {
-            entitiesRows.push(entitiesRow);
+    if (data.entities!=undefined) {
+        for (var i=1; i<data.entities.length; i++){
+            var entitiesRow = [];
+    
+            entitiesRow.push(data.entities[i].text);
+            entitiesRow.push(data.entities[i].emotion.joy * p);
+            entitiesRow.push(data.entities[i].emotion.sadness * p);
+            entitiesRow.push(data.entities[i].emotion.fear * p);
+            entitiesRow.push(data.entities[i].emotion.anger * p);
+            entitiesRow.push(data.entities[i].emotion.disgust * p);
+            
+            if(i<10){
+                entitiesRows.push(entitiesRow);
+                entitiesRowsBar.push(entitiesRow);
+            } else {
+                entitiesRows.push(entitiesRow);
+            }
         }
     }
+    
 
     // build arrays for chartFour and chartSeven
     for (var i=1; i<data.keywords.length; i++){
