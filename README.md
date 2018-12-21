@@ -6,6 +6,7 @@ Create a profile on our Web Application. Like and dislike trending YouTube conte
 ## Contributors:
 
 - Brandon Ford [https://github.com/dogtownoak] 
+<img src=https://github.com/ChristinaGASF/project_2/blob/master/wireframes/B%20Code.png>
  
 - Clarence Cheung [https://github.com/kleranscoding] 
  
