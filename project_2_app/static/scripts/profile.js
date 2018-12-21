@@ -1,4 +1,4 @@
-console.log('in-sanity check');
+console.log('in-sanity check123');
 
 var $initProfileVal;
 
@@ -90,7 +90,13 @@ $(document).ready( function() {
 
     // remove video from likes / dislikes list
     $('button.btn-remove').on('click', function() {
-        var $parent= $(this).parent();
+        console.log('adgusdhgka');
+        var $article= $(this);
+        while ($article.prop('tagName')!='ARTICLE') {
+            console.log($article);
+            $article= $article.parent();
+        }
+        var $parent= $article;
         var $article_data_id= $parent.attr('data-id');
         console.log('remove=',$article_data_id);
         
