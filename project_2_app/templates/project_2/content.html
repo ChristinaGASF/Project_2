@@ -6,6 +6,11 @@
 
 {% load staticfiles %}
 
+<<<<<<< HEAD
+<script>$( document ).ready(function(){$(".button-collapse").sideNav();});</script>
+
+=======
+>>>>>>> 2d009bef11e9436f0e95cc7ccd8995c6542a750a
 <div>
 <h4>Hello {{ user.userprofileinfo }},</h4>
 <h5>Here's today's Top Trending on YouTube content.</h5>
@@ -15,6 +20,24 @@
 
 <div class="row light-blue darken-1">
 
+<<<<<<< HEAD
+<div class="col s4 hoverable">
+    <button class="btn-get-all " type="submit" name="action"> All Categories
+    </button>
+</div>
+
+<div class="col s4 hoverable">
+    <select class= "category">
+      {% for cat in categories %}
+        <option value='{{ cat.category_id }}'>{{ cat.title }}</option>
+      {% endfor %}
+    </select>
+</div>
+
+<div class="col s4 hoverable">
+    <button type="button" class="btn-get-selected ">From this Category</button>
+</div>
+=======
   <div class="col s4 hoverable">
       <button class="btn-get-all " type="submit" name="action"> 
         All Categories
@@ -32,6 +55,7 @@
   <div class="col s4 hoverable">
       <button type="button" class="btn-get-selected ">From this Category</button>
   </div>
+>>>>>>> 2d009bef11e9436f0e95cc7ccd8995c6542a750a
 
 </div>
 
@@ -48,7 +72,7 @@
       <div class="card">
 
         <div class="card-content">
-          <div class="card-title">{{ video.title }}</div>
+          <div class="card-title black-text"><h3>{{ video.title }}</h3></div>
         </div>
 
         <div class="card-image">
@@ -89,8 +113,11 @@
 <script src="{% static 'scripts/csrf_helper.js' %}"></script>
 <script src="{% static 'scripts/content.js' %}" defer></script>
 
+<<<<<<< HEAD
+=======
 <script>$( document ).ready(function(){ $(".button-collapse").sideNav(); }); </script>
 
+>>>>>>> 2d009bef11e9436f0e95cc7ccd8995c6542a750a
 {% else %}
 
 <h1>403 Forbidden</h1>
