@@ -11,7 +11,7 @@ from watson_developer_cloud import NaturalLanguageUnderstandingV1
 from watson_developer_cloud.natural_language_understanding_v1 import Features, EntitiesOptions, KeywordsOptions, EmotionOptions, SentimentOptions, CategoriesOptions, ConceptsOptions
 import requests, json, os, re
 
-max_num_youtube_videos = 100
+max_num_youtube_videos = 50
 key= os.environ['GOOGLAPI']
 
 
@@ -62,6 +62,15 @@ def get_video_list(max_limit,cat_id):
         cat_id= snippet.get('categoryId')
         video_results.append({'youtube_id': yid, 'title': title,'description': descrp,'thumbnail': thumbnail,'channel_title': channel_title,'tags': tags,'category_id': cat_id})    
     return video_results
+
+## get youtube category list
+def get_youtube_category_list(url):
+    res = requests.get(url)
+    category = []
+    for cat in res.json().get('items'):
+        category.append({'category_id': cat.get('id'),'title':cat.get('snippet').get('title')})
+    return category
+
 
 
 # save likes/dislikes to lists
@@ -148,9 +157,8 @@ def user_logout(request):
 ## display content
 @login_required
 def content_page(request): 
-    categories = []
-    for cat in Category.objects.all():
-        categories.append({'category_id':cat.category_id,'title':cat.title})
+    url = 'https://www.googleapis.com/youtube/v3/videoCategories?part=snippet&regionCode=US&key='+key
+    categories = get_youtube_category_list(url)
     return render(request, 'project_2/content.html',{'video_results':get_video_list(max_num_youtube_videos,-1),'categories':categories})
 
 
@@ -287,7 +295,7 @@ def add_like_dislike(request):
                 description=data.get("description"),
                 tags=data.get("tags"),
                 thumbnail_url=data.get("thumbnail_url"),
-                category=Category.objects.get(category_id=data.get("category_id"))
+                category=data.get("category_id")
             )
             v.save()
             this_video = v

@@ -29,7 +29,7 @@ class Video(models.Model):
     thumbnail_url = models.CharField(max_length=100)
     thumbnail_width = models.CharField(max_length=4,default='')
     thumbnail_height = models.CharField(max_length=4,default='')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='category')
+    category = models.CharField(max_length=4,default='')
   
     def __str__(self): return self.title
 
