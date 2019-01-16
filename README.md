@@ -61,6 +61,7 @@ Create a profile on our Web Application. Like and dislike trending YouTube conte
 
 
 ## Link to Heroku hosted project
+https://yourtube-analyzed.herokuapp.com/
 
 ## Wish List | Future Development
 - ability to search content
