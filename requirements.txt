@@ -7,7 +7,7 @@ colorama==0.4.1
 decorator==4.3.0
 defusedxml==0.5.0
 dj-database-url==0.5.0
-Django==2.0.5
+Django==2.2.13
 django-heroku==0.3.1
 elasticsearch==6.3.1
 entrypoints==0.2.3
