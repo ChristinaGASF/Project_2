@@ -40,7 +40,7 @@ prometheus-client==0.5.0
 prompt-toolkit==2.0.7
 psycopg2==2.7.6.1
 ptyprocess==0.6.0
-Pygments==2.3.0
+Pygments==2.7.4
 python-dateutil==2.7.5
 python-termstyle==0.1.10
 pytz==2018.7
